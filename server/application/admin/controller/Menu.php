@@ -1,0 +1,123 @@
+<?php
+namespace app\admin\controller;
+
+/**
+ * Class Menu
+ * @package app\admin\controller
+ *
+ * @route('menu')
+ */
+class Menu extends Comm
+{
+    public function initialize()
+    {
+        parent::initialize();
+        $this->model = new \app\admin\model\Menu();
+    }
+
+    /**
+     * @return mixed
+     *
+     * @route()
+     */
+    public function index()
+    {
+        if (!$this->checkRule()) {
+            return msg(102, null, '您没有权限操作');
+        }
+        $ret = $this->model->getMenus();
+        $ret = getTree($ret);
+        if ($ret) {
+            return msg(200, $ret);
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
+    }
+
+    public function read()
+    {
+        $id = $this->param['id'];
+        $ret = $this->model->getMenuById($id);
+        if ($ret) {
+            return msg(200, $ret);
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
+    }
+
+    public function save()
+    {
+        if (!$this->checkRule()) {
+            return msg(102, null, '您没有权限操作');
+        }
+        if ($this->param['hidden'] == 'true') {
+            $this->param['hidden'] = 1;
+        } else {
+            $this->param['hidden'] = 0;
+        }
+        $ret = $this->model->saveMenu($this->param);
+        if ($ret) {
+            return msg(200, null, '添加成功');
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
+    }
+
+    public function update()
+    {
+        if (!$this->checkRule()) {
+            return msg(102, null, '您没有权限操作');
+        }
+        if ($this->param['id']) {
+            $id = $this->param['id'];
+            unset($this->param['id']);
+        } else {
+            return msg(100, null, '参数错误');
+        }
+        if ($this->param['hidden'] == 'true') {
+            $this->param['hidden'] = 1;
+        } else {
+            $this->param['hidden'] = 0;
+        }
+        $ret = $this->model->updateMenu($id, $this->param);
+        if ($ret) {
+            return msg(200, null, '添加成功');
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
+    }
+
+    public function delete()
+    {
+        if (!$this->checkRule()) {
+            return msg(401, null, '您没有权限操作');
+        }
+        if ($this->param['id']) {
+            $id = $this->param['id'];
+        } else {
+            return msg(100, null, '参数错误');
+        }
+        $ret = $this->model->del($id);
+        if ($ret) {
+            return msg(200, null, '删除成功');
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
+    }
+
+    public function enable()
+    {
+        if (isset($this->param['id'])) {
+            $id = $this->param['id'];
+            unset($this->param['id']);
+        } else {
+            return msg(100, null, '参数错误');
+        }
+        $ret = $this->model->updateMenu($id, $this->param, false);
+        if ($ret) {
+            return msg(200, null, '操作成功');
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
+    }
+}
