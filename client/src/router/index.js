@@ -11,12 +11,12 @@ Vue.use(Router)
 // NProgress.configure({ trickle: false, showSpinner: false, trickleRate: 0.02, trickleSpeed: 800 })
 
 export const publicRouter = [
-  { path: '/login', component: () => import('@/components/public/Login'), hidden: true },
-  { path: '/404', component: () => import('@/components/public/404'), hidden: true },
-  { path: '/401', component: () => import('@/components/public/401'), hidden: true },
-  { path: '/lock', component: () => import('@/components/public/Lock'), hidden: true },
-  { path: '/refresh', component: () => import('@/components/public/Refresh'), name: 'refresh', hidden: true },
-  { path: '*', component: () => import('@/components/public/404'), hidden: true }
+  { path: '/login', component: () => import('@/views/public/Login'), hidden: true },
+  { path: '/404', component: () => import('@/views/public/404'), hidden: true },
+  { path: '/401', component: () => import('@/views/public/401'), hidden: true },
+  { path: '/lock', component: () => import('@/views/public/Lock'), hidden: true },
+  { path: '/refresh', component: () => import('@/views/public/Refresh'), name: 'refresh', hidden: true },
+  { path: '*', component: () => import('@/views/public/404'), hidden: true }
 ]
 
 export const currentRouter = [
@@ -29,7 +29,7 @@ export const currentRouter = [
     },
     children: [{
       path: 'index',
-      component: () => import('@/components/public/Index'),
+      component: () => import('@/views/public/Index'),
       name: 'index',
       meta: { title: '首页' }
     }]
@@ -40,7 +40,7 @@ export const currentRouter = [
     hidden: true,
     children: [{
       path: '/info',
-      component: () => import('@/components/organization/user/Info'),
+      component: () => import('@/views/organization/user/Info'),
       name: 'info',
       meta: { title: '个人信息' },
       hidden: true

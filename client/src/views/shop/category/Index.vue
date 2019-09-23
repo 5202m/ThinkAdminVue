@@ -25,6 +25,10 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="block">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4" :page-sizes="[10, 15, 20, 25, 30, 35, 40, 45, 50]" :page-size="10" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      </el-pagination>
+    </div>
     <el-dialog :title="title" :visible.sync="dialogFormVisible" width="600px">
       <el-form v-loading="f_loading" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px">
         <el-form-item label="分类名称" prop="cat_name">
@@ -107,7 +111,9 @@ export default{
       }],
       type: 2,
       path: upload.upload(),
-      imgList: []
+      imgList: [],
+      currentPage4: 4,
+      total: 100
     }
   },
   methods: {
@@ -248,6 +254,12 @@ export default{
         return false
       }
       return true
+    },
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
     }
   },
   computed: {
