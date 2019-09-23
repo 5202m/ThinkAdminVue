@@ -1,4 +1,4 @@
-import KindEditor from '@/components/public/KindEditor'
+import KindEditor from '@/views/public/KindEditor'
 
 let install = (Vue) => {
   if (install.installed) return
