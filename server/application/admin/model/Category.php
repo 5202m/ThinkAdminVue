@@ -12,12 +12,15 @@ use think\Model;
 class Category extends Model
 {
 
-    public function getCategories($data = [])
+    public function getCategories($data = [], $page = 1, $pageSize = 10)
     {
-        $res = $this->where($data)->order('sort_order', 'asc')->select();
+        //$count = $this->where($data)->count();
+        $res = $this->where($data)/*->page($page, $pageSize)*/->order('sort_order', 'asc')->select();
         if ($res) {
             $res = $res->toArray();
         }
+        //$res = $this->getChildrens($res);
+        //$data = ['total' => $count, 'page' => $page, 'pageSize' => $pageSize, 'data' => $res];
         return $res;
     }
 
@@ -97,5 +100,18 @@ class Category extends Model
             $this->error = '删除失败';
             return false;
         }
+    }
+
+    private function getChildrens($data)
+    {
+        $datas = $data;
+        foreach ($datas as &$row) {
+            $where = ['parent_id' => $row['cat_id']];
+            $childrens = $this->where($where)->order('sort_order', 'asc')->select();
+            if($childrens){
+                $row['children'] = $childrens->toArray();
+            }
+        }
+        return $datas;
     }
 }

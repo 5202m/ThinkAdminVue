@@ -25,10 +25,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="block">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4" :page-sizes="[10, 15, 20, 25, 30, 35, 40, 45, 50]" :page-size="10" layout="total, sizes, prev, pager, next, jumper" :total="total">
+    <!--div class="block">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="data.currentPage" :page-sizes="[10, 20, 30, 40, 50]" :page-size="data.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="data.total">
       </el-pagination>
-    </div>
+    </div-->
     <el-dialog :title="title" :visible.sync="dialogFormVisible" width="600px">
       <el-form v-loading="f_loading" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px">
         <el-form-item label="分类名称" prop="cat_name">
@@ -111,9 +111,7 @@ export default{
       }],
       type: 2,
       path: upload.upload(),
-      imgList: [],
-      currentPage4: 4,
-      total: 100
+      imgList: []
     }
   },
   methods: {

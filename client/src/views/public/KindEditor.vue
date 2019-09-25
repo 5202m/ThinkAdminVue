@@ -1,6 +1,6 @@
 <template>
   <div class="kindeditor">
-    <textarea :id="id" name="content">{!! outContent }</textarea>
+    <textarea :id="id" name="content" v-model="outContent"></textarea>
   </div>
 </template>
 
@@ -324,7 +324,7 @@ export default {
       colorTable: _this.colorTable,
       afterCreate: _this.afterCreate,
       afterChange: function () {
-        _this.afterChange()
+        _this.afterChange
         _this.outContent = this.html()
       },
       afterTab: _this.afterTab,

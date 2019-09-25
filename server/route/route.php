@@ -22,6 +22,7 @@ Route::resource('department','admin/department');
 Route::resource('user','admin/adminUser');
 Route::resource('rule','admin/rule');
 Route::resource('category','admin/category');
+Route::resource('good', 'admin/goods');
 
 Route::get('base/index', 'admin/base/index');
 Route::post('base/login', 'admin/base/login');

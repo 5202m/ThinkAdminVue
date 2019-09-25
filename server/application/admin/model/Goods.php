@@ -16,14 +16,15 @@ class Goods extends Model
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function getGoods($where = [], $page = 0, $pageSize = 10)
+    public function getGoods($where = [], $page = 1, $pageSize = 10)
     {
-        //$pageSize = $page ? $pageSize : $page * $pageSize;
-        $res = $this->where($where)->skip($page)->limit($pageSize)->order(['sort_order'=>'desc', 'goods_id'=>'desc'])->select();
+        $count = $this->where($where)->count();
+        $res = $this->where($where)->page($page, $pageSize)->order(['sort_order'=>'desc', 'goods_id'=>'desc'])->select();
         if ($res) {
             $res = $res->toArray();
         }
-        return $res;
+        $data = ['currentPage' => (integer)$page, 'pageSize' => (integer)$pageSize, 'total' => (integer)$count, 'data' => $res];
+        return $data;
     }
 
     /**

@@ -6,6 +6,7 @@ import position from './position'
 import rule from './rule'
 import user from './user'
 import category from './category'
+import good from './good'
 
 export default {
   base,
@@ -15,5 +16,6 @@ export default {
   position,
   rule,
   user,
-  category
+  category,
+  good
 }

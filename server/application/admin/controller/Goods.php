@@ -5,8 +5,14 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Request;
 
-class Goods extends Controller
+class Goods extends Comm
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->model = new \app\admin\model\Goods();
+    }
+
     /**
      * 显示资源列表
      *
@@ -14,7 +20,17 @@ class Goods extends Controller
      */
     public function index()
     {
-        //
+        if (!$this->checkRule()) {
+            return msg(102, null, '您没有权限操作');
+        }
+        $page = $this->param['currentPage'];
+        $pageSize = $this->param['pageSize'];
+        $ret = $this->model->getGoods([], $page, $pageSize);
+        if ($ret) {
+            return msg(200, $ret);
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
     }
 
     /**

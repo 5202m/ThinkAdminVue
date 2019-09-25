@@ -1,12 +1,7 @@
 <template lang="pug">
   <div>
     <el-button class="mb-20" type="primary" icon="el-icon-plus" @click="add">添加</el-button>
-    <el-table :data="data" border v-loading="loading">
-      <!--el-table-column prop="index" label="序号" align="center" width="100">
-        <template slot-scope="scope">
-          <span>{{scope.$index + 1}}</span>
-        </template>
-      </el-table-column-->
+    <el-table :data="data.data" border v-loading="loading">
       <el-table-column prop="goods_id" label="编号" align="center"></el-table-column>
       <el-table-column prop="goods_name" label="商品名称" align="center"></el-table-column>
       <el-table-column prop="remark" label="价格/货号/运费" align="center"></el-table-column>
@@ -27,6 +22,10 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="block">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="data.currentPage" :page-sizes="[10, 20, 30, 40, 50]" :page-size="data.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="data.total">
+      </el-pagination>
+    </div>
   </div>
 </template>
 <script>
@@ -35,7 +34,12 @@ import util from '@/utils'
 export default{
   data () {
     return {
-      data: [],
+      data: {
+        data: [],
+        currentPage: 1,
+        pageSize: 10,
+        total: 0
+      },
       loading: false,
       f_loading: false,
       dialogFormVisible: false,
@@ -59,7 +63,7 @@ export default{
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let res = await api.department.del(e.id)
+        let res = await api.good.del(e.id)
         util.response(res, this)
         if (res.code === 200) {
           util.message('操作成功')
@@ -71,23 +75,10 @@ export default{
       })
     },
     add () {
-      this.dialogFormVisible = true
-      this.title = '添加部门'
-      this.type = 1
-      this.$nextTick(() => {
-        this.$refs['form'].resetFields()
-        delete this.ruleForm.id
-        this.ruleForm.name = ''
-        this.ruleForm.remark = ''
-      })
+      this.$router.push({path: '/shop/good/add'})
     },
     edit (e) {
-      this.dialogFormVisible = true
-      this.title = '编辑部门'
-      this.type = 2
-      this.ruleForm.name = e.name
-      this.ruleForm.remark = e.remark
-      this.ruleForm.id = e.id
+      this.$router.push({path: '/shop/good/add/' + e.id})
     },
     async submit () {
       this.f_loading = true
@@ -95,9 +86,9 @@ export default{
         if (valid) {
           let res = []
           if (this.type === 1) {
-            res = await api.department.save(this.ruleForm)
+            res = await api.good.save(this.ruleForm)
           } else {
-            res = await api.department.update(this.ruleForm)
+            res = await api.good.update(this.ruleForm)
           }
           util.response(res, this)
           this.f_loading = false
@@ -119,7 +110,7 @@ export default{
         'id': e.id,
         'status': e.status ? 0 : 1
       }
-      let res = await api.department.enable(data)
+      let res = await api.good.enable(data)
       util.response(res, this)
       if (res.code === 200) {
         e.status = e.status ? 0 : 1
@@ -128,11 +119,21 @@ export default{
       }
     },
     async getData () {
+      let _params = {
+        currentPage: this.data.currentPage,
+        pageSize: this.data.pageSize
+      }
       this.loading = true
-      let res = await api.department.index()
+      let res = await api.good.index(_params)
       util.response(res, this)
       this.loading = false
       if (res.code === 200) this.data = res.data
+    },
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
     }
   },
   mounted () {

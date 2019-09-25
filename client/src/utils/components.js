@@ -5,6 +5,8 @@ import user from '@/views/organization/user/Index'
 import menu from '@/views/system/menu/Index'
 import rule from '@/views/system/rule/Index'
 import category from '@/views/shop/category/Index'
+import good from '@/views/shop/goods/Index'
+import goodAdd from '@/views/shop/goods/Add'
 
 let comps = {
   'home': home,
@@ -13,6 +15,8 @@ let comps = {
   'position': position,
   'user': user,
   'rule': rule,
-  'category': category
+  'category': category,
+  'good': good,
+  'goodAdd': goodAdd
 }
 export default comps
