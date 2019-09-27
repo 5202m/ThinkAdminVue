@@ -7,6 +7,7 @@ import rule from '@/views/system/rule/Index'
 import category from '@/views/shop/category/Index'
 import good from '@/views/shop/goods/Index'
 import goodAdd from '@/views/shop/goods/Add'
+import goodType from '@/views/shop/type/Index'
 
 let comps = {
   'home': home,
@@ -17,6 +18,7 @@ let comps = {
   'rule': rule,
   'category': category,
   'good': good,
-  'goodAdd': goodAdd
+  'goodAdd': goodAdd,
+  'goodType': goodType
 }
 export default comps

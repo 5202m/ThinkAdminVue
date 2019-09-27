@@ -19,7 +19,7 @@ class Category extends Validate
     ];
 
     protected $message  =   [
-        'title.require' => '分类名称不能为空',
+        'cat_name.require' => '分类名称不能为空',
         /*'component.require' => '主题不能为空',
         'path.require' => '路径不能为空',
         'name.require' => 'name不能为空',

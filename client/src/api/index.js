@@ -7,6 +7,7 @@ import rule from './rule'
 import user from './user'
 import category from './category'
 import good from './good'
+import goodType from './goodsType'
 
 export default {
   base,
@@ -17,5 +18,6 @@ export default {
   rule,
   user,
   category,
-  good
+  good,
+  goodType
 }
