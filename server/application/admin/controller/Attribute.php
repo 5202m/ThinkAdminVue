@@ -5,8 +5,13 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Request;
 
-class Attribute extends Controller
+class Attribute extends Comm
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->model = new \app\admin\model\Attribute();
+    }
     /**
      * 显示资源列表
      *
@@ -14,7 +19,22 @@ class Attribute extends Controller
      */
     public function index()
     {
-        //
+        if (!$this->checkRule()) {
+            return msg(102, null, '您没有权限操作');
+        }
+        $page = $this->param['currentPage'];
+        $pageSize = $this->param['pageSize'];
+        //$cat_id = $this->param['cat_id'];
+        $where = [];
+        /*if($cat_id){
+            $where['cat_id'] = $cat_id;
+        }*/
+        $ret = $this->model->getAttributes($where, $page, $pageSize);
+        if ($ret) {
+            return msg(200, $ret);
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
     }
 
     /**

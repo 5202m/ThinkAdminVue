@@ -78,7 +78,7 @@ class Category extends Model
             }
         }
         try {
-            $this->allowField(true)->save($param, [$this->getPk() => $id]);
+            $this->allowField(true)->save($param, ['cat_id' => $id]);
             return true;
         } catch (\Exception $e) {
             $this->error = '更新失败';

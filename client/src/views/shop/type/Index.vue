@@ -13,7 +13,7 @@
       </el-table-column>
       <el-table-column label="操作" width="300" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" type="info" plain @click="enable(scope.row, 'show')" >属性列表</el-button>
+          <el-button size="mini" type="info" plain @click="editAttr(scope.row)" >属性列表</el-button>
           <el-button size="mini" type="primary" plain @click="edit(scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" plain @click="del(scope.row,scope.$index)">删除</el-button>
         </template>
@@ -173,6 +173,9 @@ export default{
     },
     handleCurrentChange (val) {
       console.log(`当前页: ${val}`)
+    },
+    editAttr (e) {
+      this.$router.push({path: '/shop/attr/index', params: {cat_id: e.cat_id}})
     }
   },
   computed: {

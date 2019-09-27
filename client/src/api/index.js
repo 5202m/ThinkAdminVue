@@ -8,6 +8,7 @@ import user from './user'
 import category from './category'
 import good from './good'
 import goodType from './goodsType'
+import attribute from './attribute'
 
 export default {
   base,
@@ -19,5 +20,6 @@ export default {
   user,
   category,
   good,
-  goodType
+  goodType,
+  attribute
 }

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import qs from 'qs'
 import _ from 'lodash'
 
 let baseURL = 'http://tav.test'
@@ -43,7 +42,7 @@ let del = (url = '', params = {}) => {
 }
 
 let post = async (url = '', params = {}) => {
-  params = _.size(params) ? qs.stringify(params) : {}
+  params = _.size(params) ? params : {}
   let requestConf = {
     url,
     baseURL: baseURL,
@@ -55,7 +54,7 @@ let post = async (url = '', params = {}) => {
 }
 
 let put = async (url = '', params = {}) => {
-  params = _.size(params) ? qs.stringify(params) : {}
+  params = _.size(params) ? params : {}
   let requestConf = {
     url,
     baseURL: baseURL,
