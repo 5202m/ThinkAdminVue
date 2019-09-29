@@ -31,6 +31,23 @@ class GoodsType extends Comm
     }
 
     /**
+     * 获取所有商品类型
+     * @return false|string
+     */
+    public function goodsTypes()
+    {
+        if (!$this->checkRule()) {
+            return msg(102, null, '您没有权限操作');
+        }
+        $ret = $this->model->getGoodsTypeList();
+        if ($ret) {
+            return msg(200, $ret);
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
+    }
+
+    /**
      * 显示创建资源表单页.
      *
      * @return \think\Response

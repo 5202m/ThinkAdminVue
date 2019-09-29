@@ -53,7 +53,7 @@
       </el-form-item>
     </el-form>
     <div class="dialog-footer" slot="footer" align="center">
-      <el-button @click="dialogFormVisible = false">取 消</el-button>
+      <el-button @click="history.go(-1)">取 消</el-button>
       <el-button type="primary" @click="submit">确 定</el-button>
     </div>
   </div>
@@ -64,18 +64,13 @@ import util from '@/utils'
 export default{
   data () {
     return {
-      data: {
-        data: [],
-        currentPage: 1,
-        pageSize: 10,
-        total: 0
-      },
+      data: [],
       loading: false,
       f_loading: false,
       dialogFormVisible: false,
       ruleForm: {
         attr_name: '',
-        cat_id: 0,
+        cat_id: null,
         attr_cat_type: 0,
         attr_index: 0,
         is_linked: 0,
@@ -94,10 +89,7 @@ export default{
         ]
       },
       type: 2,
-      options: [{
-        cat_id: 0,
-        cat_name: ''
-      }]
+      options: []
     }
   },
   methods: {
@@ -123,20 +115,15 @@ export default{
       this.f_loading = true
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
-          let res = []
-          if (this.type === 1) {
-            res = await api.attribute.save(this.ruleForm)
-          } else {
-            res = await api.attribute.update(this.ruleForm)
-          }
+          let res = await api.attribute.save(this.ruleForm)
           util.response(res, this)
-          this.f_loading = false
           if (res.code === 200) {
-            this.dialogFormVisible = false
             util.message('操作成功')
-            this.getData()
+            this.$router.push({path: '/shop/attr/index'})
           } else {
             util.message(res.error, 'error')
+            this.f_loading = false
+            return false
           }
         } else {
           this.f_loading = false
@@ -145,15 +132,15 @@ export default{
       })
     },
     async getData () {
-      let _params = {
-        currentPage: this.data.currentPage,
-        pageSize: this.data.pageSize
-      }
-      this.loading = true
-      let res = await api.attribute.index(_params)
+    },
+    async getGoodsType () {
+      let res = await api.goodType.typeList()
       util.response(res, this)
       this.loading = false
-      if (res.code === 200) this.data = res.data
+      this.options = res.data
+      if (this.options == null) {
+        this.options = []
+      }
     }
   },
   computed: {
@@ -164,7 +151,7 @@ export default{
     }
   },
   mounted () {
-    this.getData()
+    this.getGoodsType()
   }
 }
 </script>

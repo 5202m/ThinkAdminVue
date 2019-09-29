@@ -72,3 +72,21 @@ Vue.filter('enableShowFilterType', function (value) {
     return 'success'
   }
 })
+
+Vue.filter('inputTypeFilter', function (value) {
+  if (value) {
+    return '从列表中选择'
+  } else {
+    return '手工录入'
+  }
+})
+
+Vue.filter('attrTypeFilter', function (value) {
+  if (value === 0) {
+    return '唯一属性'
+  } else if (value === 1) {
+    return '单选属性'
+  } else if (value === 2) {
+    return '复选属性'
+  }
+})

@@ -20,7 +20,7 @@ class Attribute extends Model
     public function getAttributes($where = [], $page = 1, $pageSize = 10)
     {
         $count = $this->where($where)->count();
-        $res = $this/*->withJoin('GoodsType', 'left join')*/->where($where)->page($page, $pageSize)->select();
+        $res = $this->with('GoodsType')->where($where)->page($page, $pageSize)->select();
         if ($res) {
             $res = $res->toArray();
         }
@@ -60,7 +60,7 @@ class Attribute extends Model
             $this->data($param)->allowField(true)->save();
             return true;
         } catch (\Exception $e) {
-            $this->error = '添加失败';
+            $this->error = '添加失败'.$e->getMessage();
             return false;
         }
     }

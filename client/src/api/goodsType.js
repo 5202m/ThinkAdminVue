@@ -37,11 +37,18 @@ let del = async (id) => {
   return result
 }
 
+let typeList = async () => {
+  let url = path + '/list'
+  let result = await http.get(url)
+  return result
+}
+
 export default{
   index,
   save,
   read,
   update,
   enable,
-  del
+  del,
+  typeList
 }

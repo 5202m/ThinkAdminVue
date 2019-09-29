@@ -37,7 +37,7 @@ class GoodsType extends Model
      */
     public function getGoodsTypeList()
     {
-        $res = $this->where(['enable'=>1])->select();
+        $res = $this->where(['enabled'=>1])->select();
         if($res){
             $res = $res->toArray();
         }
@@ -51,7 +51,7 @@ class GoodsType extends Model
      */
     public function getGoodTypeById($id = null)
     {
-        $res = $this->getById($id);
+        $res = $this->where('cat_id', $id)->findOrEmpty();
         if ($res) {
             return $res;
         } else {
