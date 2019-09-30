@@ -35,7 +35,7 @@ class Attribute extends Model
      */
     public function getAttributeById($id = null)
     {
-        $res = $this->getById($id);
+        $res = $this->where('attr_id', $id)->findOrEmpty();
         if ($res) {
             return $res;
         } else {

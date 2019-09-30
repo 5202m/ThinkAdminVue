@@ -9,7 +9,7 @@ import good from '@/views/shop/goods/Index'
 import goodAdd from '@/views/shop/goods/Add'
 import goodType from '@/views/shop/type/Index'
 import attribute from '@/views/shop/attr/Index'
-import attributeAdd from '@/views/shop/attr/Add'
+import attributeAdd from '@/views/shop/attr/Edit'
 
 let comps = {
   'home': home,
@@ -22,7 +22,7 @@ let comps = {
   'good': good,
   'goodAdd': goodAdd,
   'goodType': goodType,
-  'attr': attribute,
+  'attribute': attribute,
   'attrAdd': attributeAdd
 }
 export default comps

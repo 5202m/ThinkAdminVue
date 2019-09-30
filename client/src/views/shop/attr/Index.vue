@@ -44,28 +44,6 @@ export default{
         cat_id: 0
       },
       loading: false,
-      f_loading: false,
-      dialogFormVisible: false,
-      ruleForm: {
-        attr_name: '',
-        cat_id: 0,
-        attr_cat_type: 0,
-        attr_index: 0,
-        is_linked: 0,
-        attr_type: 0,
-        attr_input_type: 0,
-        attr_values: '',
-        sort_order: 0
-      },
-      title: '添加商品类型属性',
-      rules: {
-        attr_name: [
-          { required: true, message: '请填写商品类型属性名称', trigger: 'blur' }
-        ],
-        cat_id: [
-          { required: true, message: '请选择商品类型', trigger: 'blur' }
-        ]
-      },
       options: [{
         cat_id: 0,
         cat_name: ''
@@ -98,9 +76,10 @@ export default{
       })
     },
     add () {
-      this.$router.push({path: '/shop/attr/add'})
+      this.$router.push({path: '/shop/attr/edit'})
     },
     edit (e) {
+      this.$router.push({path: '/shop/attr/edit?id=' + e.attr_id})
     },
     async getData () {
       let _params = {

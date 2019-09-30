@@ -108,7 +108,7 @@ class Attribute extends Comm
         }
         $ret = $this->model->updateAttribute($id, $this->param);
         if ($ret) {
-            return msg(200, null, '添加成功');
+            return msg(200, null, '更新成功');
         } else {
             return msg(100, null, $this->model->getError());
         }

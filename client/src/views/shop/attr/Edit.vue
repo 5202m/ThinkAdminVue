@@ -94,7 +94,7 @@ export default{
   },
   methods: {
     add () {
-      this.$router.push({path: '/shop/attr/edit'})
+      this.$router.push({path: '/shop/attr/add'})
     },
     edit (e) {
       this.dialogFormVisible = true
