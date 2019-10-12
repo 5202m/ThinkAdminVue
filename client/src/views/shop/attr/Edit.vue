@@ -53,7 +53,7 @@
       </el-form-item>
     </el-form>
     <div class="dialog-footer" slot="footer" align="center">
-      <el-button @click="history.go(-1)">取 消</el-button>
+      <el-button @click="cancel">取 消</el-button>
       <el-button type="primary" @click="submit">确 定</el-button>
     </div>
   </div>
@@ -110,6 +110,9 @@ export default{
       this.ruleForm.attr_input_type = e.attr_input_type
       this.ruleForm.attr_values = e.attr_values
       this.ruleForm.sort_order = e.sort_order
+    },
+    cancel () {
+      this.$router.push({path: '/shop/attr/index'})
     },
     async submit () {
       this.f_loading = true

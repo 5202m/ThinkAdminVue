@@ -29,6 +29,24 @@ class Attribute extends Model
     }
 
     /**
+     * 根据条件获取商品类型属性
+     * @param array $where
+     * @param array $order
+     * @return array|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getAttributeList($where = [], $order = ['sort_order'=>'desc', 'attr_id'=>'desc'])
+    {
+        $res = $this->where($where)->order($order)->select();
+        if($res){
+            $res = $res->toArray();
+        }
+        return $res;
+    }
+
+    /**
      * 根据ID获取数据
      * @param null $id
      * @return bool

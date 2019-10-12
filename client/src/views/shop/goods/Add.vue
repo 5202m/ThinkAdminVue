@@ -3,7 +3,7 @@
     <el-form v-loading="f_loading" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
       <el-form-item label="商品分类" prop="cat_id">
         <el-select v-model="ruleForm.cat_id" placeholder="请选择">
-          <el-option v-for="item in options" :key="item.cat_id" :label="item.cat_name" :value="item.cat_id" />
+          <el-option v-for="item in categoryData" :key="item.cat_id" :label="item.cat_name" :value="item.cat_id" />
         </el-select>
       </el-form-item>
       <el-form-item label="商品货号" prop="goods_sn">
@@ -74,9 +74,76 @@
       <el-form-item label="能作为普通商品销售">
         <el-switch v-model="ruleForm.is_alone_sale" />
       </el-form-item>
+      <el-form-item label="属性类型">
+        <el-select v-model="ruleForm.goods_type" placeholder="请选择" @change="getAttrs($event)">
+          <el-option v-for="item in goodsTypeData" :key="item.cat_id" :label="item.cat_name" :value="item.cat_id" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="商品规格" v-if="ruleForm.goods_type != ''">
+        <template>
+          <table>
+            <tr v-for="(row, k) in attrs">
+              <td width='10%'>{{row.attr_name}}</td>
+              <td>
+                <el-checkbox-group v-if="row.attr_input_type === 1" v-model="ruleForm.attr_check_list" @change="attrCkChange($event)">
+                  <el-checkbox v-for="(item, key) in row.attr_values.split('\n')" :label="item" :key="item">{{item}}</el-checkbox>
+                </el-checkbox-group>
+                <template v-if="row.attr_cat_type === 1">
+                  <div style="float:left;margin-right:10px;" v-for="row in colorPickers">
+                  <el-color-picker :v-model="ruleForm[row.name]" :value="row.value" size="mini" :predefine="predefineColors" @change="colorPickerChange($event, row.idx)"></el-color-picker>&nbsp;&nbsp;
+                  <a href="javascript:void(0);" @click="addColorPicker($event, row.idx)"><i :class="row.iconCls"></i></a>
+                  </div>
+                </template>
+              </td>
+            </tr>
+          </table>
+          <table width="100%" v-if="attrTabData.length > 0" class="table table-bordered">
+            <thead>
+              <tr style="border: 1px #EBEEF5 solid;">
+                <th v-for="(val, key) in attrTabHeader" v-if="val !== ''" style="width:10%;border: 0px #EBEEF5 solid" align="center">{{val}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="row in attrTabData">
+                <td v-if="row.size !== ''" align="center">{{row.size}}</td>
+                <td v-if="row.color !== ''" align="center">{{row.color}}</td>
+                <td><el-input v-model="row.product_price" placeholder="0.00" /></td>
+                <td><el-input v-model="row.product_number" placeholder="0" /></td>
+                <td><el-input v-model="row.product_warn_number" placeholder="1" /></td>
+                <td><el-input v-model="row.product_sn" placeholder="" /></td>
+                <td><el-input v-model="row.product_bar_code" placeholder="" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </template>
+      </el-form-item>
+      <el-form-item label="属性图片" v-if="ruleForm.goods_type != '' && (attrImgSizeTabData.length > 0 || attrImgColorTabData.length > 0)">
+        <template>
+          <div v-if="attrImgSizeTabData.length > 0" class="attr_img">
+            <div>尺码</div>
+            <div class="attr_img_item" v-for="row in attrImgSizeTabData">
+              <el-input v-model="row.size" size="medium" class="attr_img_input" />
+              <span class="attr_img_sort">排序</span>
+              <el-input v-model="row.sort" size="medium" class="attr_img_input" />
+              <el-upload class="upload-demo attr_img_upload" action="https://jsonplaceholder.typicode.com/posts/">
+                <el-button size="small" type="primary">点击上传</el-button>
+              </el-upload>
+            </div>
+          </div>
+          <div v-if="attrImgColorTabData.length > 0" class="attr_img">
+            <div>颜色</div>
+            <div class="attr_img_item" v-for="row in attrImgColorTabData">
+              <el-input v-model="row.color" size="medium" class="attr_img_input" />
+              <span class="attr_img_sort">排序</span>
+              <el-input v-model="row.sort" size="medium" class="attr_img_input" />
+            </div>
+          </div>
+        </template>
+      </el-form-item>
     </el-form>
-    <div class="dialog-footer" slot="footer">
-      <el-button @click="dialogFormVisible = false">取 消</el-button>
+    <div class="dialog-footer" slot="footer" align="center">
+      <el-button @click="cancel">取 消</el-button>
       <el-button type="primary" @click="submit">确 定</el-button>
     </div>
   </div>
@@ -111,7 +178,11 @@ export default{
         is_new: false,
         is_hot: false,
         is_on_sale: true,
-        is_alone_sale: true
+        is_alone_sale: true,
+        goods_type: '',
+        attr_check_list: [],
+        attr_color_list: [],
+        color_0: ''
       },
       title: '添加商品分类',
       rules: {
@@ -122,10 +193,15 @@ export default{
           { required: true, message: '请填写分类名称', trigger: 'blur' }
         ]
       },
+      categoryData: [{
+        cat_id: 0,
+        cat_name: '顶级分类'
+      }],
       options: [{
         cat_id: 0,
         cat_name: '顶级分类'
       }],
+      goodsTypeData: [],
       type: 2,
       path: upload.upload(),
       imgList: [],
@@ -133,7 +209,86 @@ export default{
       editorText: '直接初始化值',
       editorTextCopy: '',
       dialogImageUrl: '',
-      dialogVisible: false
+      dialogVisible: false,
+      attrs: [],
+      colorPickers: [{
+        idx: 0,
+        iconCls: 'el-icon-plus',
+        name: 'color_0',
+        value: ''
+      }],
+      attrTabHeader: {},
+      attrTabData: [],
+      attrImgSizeTabData: [],
+      attrImgColorTabData: [],
+      predefineColors: [
+        '#000000',
+        '#434343',
+        '#666666',
+        '#cccccc',
+        '#d9d9d9',
+        '#ffffff',
+        '#980000',
+        '#ff0000',
+        '#ff9900',
+        '#ffff00',
+        '#00ff00',
+        '#00ffff',
+        '#4a86e8',
+        '#0000ff',
+        '#9900ff',
+        '#ff00ff',
+        '#e6b8af',
+        '#f4cccc',
+        '#fce5cd',
+        '#fff2cc',
+        '#d9ead3',
+        '#d0e0e3',
+        '#c9daf8',
+        '#cfe2f3',
+        '#d9d2e9',
+        '#ead1dc',
+        '#dd7e6b',
+        '#ea9999',
+        '#f9cb9c',
+        '#ffe599',
+        '#b6d7a8',
+        '#a2c4c9',
+        '#a4c2f4',
+        '#9fc5e8',
+        '#b4a7d6',
+        '#d5a6bd',
+        '#cc4125',
+        '#e06666',
+        '#f6b26b',
+        '#ffd966',
+        '#93c47d',
+        '#76a5af',
+        '#6d9eeb',
+        '#6fa8dc',
+        '#8e7cc3',
+        '#c27ba0',
+        '#a61c00',
+        '#cc0000',
+        '#e69138',
+        '#f1c232',
+        '#6aa84f',
+        '#45818e',
+        '#3c78d8',
+        '#3d85c6',
+        '#674ea7',
+        '#a64d79',
+        '#5b0f00',
+        '#660000',
+        '#783f04',
+        '#7f6000',
+        '#274e13',
+        '#0c343d',
+        '#1c4587',
+        '#073763',
+        '#20124d',
+        '#4c1130'
+      ]
     }
   },
   methods: {
@@ -194,6 +349,9 @@ export default{
       this.ruleForm.sort_order = e.sort_order
       this.ruleForm.touch_icon = e.touch_icon
     },
+    cancel () {
+      this.$router.push({path: '/shop/good/index'})
+    },
     async submit () {
       this.f_loading = true
       this.$refs['ruleForm'].validate(async (valid) => {
@@ -245,15 +403,26 @@ export default{
       let res = await api.category.index()
       util.response(res, this)
       this.loading = false
-      this.data = res.data
-      if (this.data == null) {
-        this.data = []
+      this.categoryData = res.data
+      if (this.categoryData == null) {
+        this.categoryData = [{cat_id: 0, cat_name: '顶级分类'}]
       }
-      this.getCategory()
+      this.categoryData.unshift({cat_id: 0, cat_name: '顶级分类'})
+      let typeRes = await api.goodType.typeList()
+      util.response(typeRes, this)
+      this.goodsTypeData = typeRes.data
+      if (this.goodsTypeData == null) {
+        this.goodsTypeData = []
+      }
     },
-    getCategory () {
-      this.options = util.cloneDeep(this.data)
-      this.options.unshift({cat_id: 0, cat_name: '顶级分类'})
+    async getAttrs (event) {
+      this.attrTabData = []
+      let _params = {
+        cat_id: event
+      }
+      let res = await api.attribute.list(_params)
+      util.response(res, this)
+      this.attrs = res.data
     },
     handleImgSuccess (res, file) {
       util.response(res, this)
@@ -293,6 +462,101 @@ export default{
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
+    },
+    addColorPicker (event, index) {
+      if (event.target.className === 'el-icon-plus') {
+        let idx = this.colorPickers[this.colorPickers.length - 1].idx + 1
+        this.ruleForm['color_' + idx] = ''
+        this.colorPickers.push({idx: idx, iconCls: 'el-icon-minus', name: this.ruleForm['color_' + idx]})
+      } else {
+        this.colorPickers.splice(index, 1)
+        this.ruleForm.attr_color_list.splice(index, 1)
+        this.attrImgColorTabData.splice(index, 1)
+        delete this.ruleForm['color_' + index]
+      }
+    },
+    colorPickerChange (value, idx) {
+      let thiz = this
+      thiz.attrTabHeader = {'size': '', 'color': '', 'price': '本店价', 'number': '库存', 'warn': '预警值', 'sn': '商品货号', 'code': '商品条形码', 'op': '操作'}
+      thiz.ruleForm['color_' + idx] = value
+      if (!value) {
+        thiz.colorPickers.splice(idx, 1)
+        thiz.attrImgColorTabData.splice(idx, 1)
+        return
+      }
+      thiz.ruleForm.attr_color_list.push(value)
+      thiz.attrImgColorTabData.push({'color': value, 'sort': 0})
+      thiz.colorPickers.forEach(function (row, key) {
+        if (key === idx) {
+          row.value = value
+        }
+      })
+      if (thiz.ruleForm.attr_color_list.length > 0) {
+        thiz.attrTabHeader.color = '颜色'
+      }
+      if (thiz.ruleForm.attr_check_list.length > 0) {
+        thiz.attrTabHeader.size = '尺码'
+      }
+      thiz.ruleForm.attr_color_list.forEach(function (item, key) {
+        thiz.attrTabData.forEach(function (row) {
+          if (row.color === '') {
+            row.color = item
+          } else if (row.color === item) {
+          } else {
+            thiz.attrTabData.push({
+              'size': row.size,
+              'color': item,
+              'product_price': 0,
+              'product_number': 0,
+              'product_warn_number': 1,
+              'product_sn': '',
+              'product_bar_code': ''
+            })
+          }
+        })
+      })
+    },
+    attrCkChange (event) {
+      let thiz = this
+      thiz.attrTabHeader = {'size': '', 'color': '', 'price': '本店价', 'number': '库存', 'warn': '预警值', 'sn': '商品货号', 'code': '商品条形码', 'op': '操作'}
+      thiz.attrTabData = []
+      thiz.attrImgSizeTabData = []
+      thiz.ruleForm.attr_check_list.forEach(function (item) {
+        thiz.attrTabData.push({
+          'size': item,
+          'color': '',
+          'product_price': 0,
+          'product_number': 0,
+          'product_warn_number': 1,
+          'product_sn': '',
+          'product_bar_code': ''
+        })
+        thiz.attrImgSizeTabData.push({'size': item, 'sort': 0})
+      })
+      if (thiz.ruleForm.attr_color_list.length > 0) {
+        thiz.attrTabHeader.color = '颜色'
+      }
+      if (thiz.ruleForm.attr_check_list.length > 0) {
+        thiz.attrTabHeader.size = '尺码'
+      }
+      thiz.ruleForm.attr_color_list.forEach(function (item, key) {
+        thiz.attrTabData.forEach(function (row) {
+          if (row.color === '') {
+            row.color = item
+          } else if (row.color === item) {
+          } else {
+            thiz.attrTabData.push({
+              'size': row.size,
+              'color': item,
+              'product_price': 0,
+              'product_number': 0,
+              'product_warn_number': 1,
+              'product_sn': '',
+              'product_bar_code': ''
+            })
+          }
+        })
+      })
     }
   },
   computed: {
@@ -315,5 +579,20 @@ export default{
 <style>
     .el-table .bg{
         background: #EDE7F6;
+    }
+    .attr_img {
+        width:100%;clear: both;
+    }
+    .attr_img_item {
+        width:25%;float:left;
+    }
+    .attr_img .attr_img_item .attr_img_sort {
+        float:left;margin-right:5px;
+    }
+    .attr_img .attr_img_item .attr_img_input {
+        width:32%;float:left;margin-right:5px;
+    }
+    .attr_img .attr_img_item .attr_img_upload {
+        float:left;
     }
 </style>

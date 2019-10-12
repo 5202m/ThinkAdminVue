@@ -7,6 +7,12 @@ let index = async (params) => {
   return result
 }
 
+let list = async (params) => {
+  let url = path + '/list'
+  let result = await http.get(url, params)
+  return result
+}
+
 let save = async (data) => {
   let url = path
   let result = await http.post(url, data)
@@ -39,6 +45,7 @@ let del = async (id) => {
 
 export default{
   index,
+  list,
   save,
   read,
   update,

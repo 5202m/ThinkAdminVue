@@ -42,6 +42,7 @@ Route::post('menu/enable', 'admin/menu/enable');
 Route::post('category/enable', 'admin/category/enable');
 
 Route::get('goodType/list', 'admin/goodsType/goodsTypes');
+Route::get('attr/list', 'admin/attribute/attrList');
 
 Route::miss('admin/base/index');
 

@@ -36,6 +36,25 @@ class Attribute extends Comm
     }
 
     /**
+     * 根据条件获取数据
+     * @return false|string
+     */
+    public function attrList()
+    {
+        if(!$this->checkRule()){
+            return msg(102, null, '您没有权限操作');
+        }
+        $cat_id = $this->param['cat_id'];
+        $where = ['cat_id'=>$cat_id];
+        $ret = $this->model->getAttributeList($where);
+        if($ret){
+            return msg(200, $ret);
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
+    }
+
+    /**
      * 显示创建资源表单页.
      *
      * @return \think\Response
