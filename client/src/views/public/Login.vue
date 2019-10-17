@@ -102,7 +102,7 @@ export default{
       })
     },
     toLink () {
-      window.open('https://github.com/5202m/vue-thinkphp-admin')
+      window.open('https://github.com/5202m/ThinkAdminVue')
     }
   }
 }

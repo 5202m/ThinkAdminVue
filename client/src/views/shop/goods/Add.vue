@@ -7,10 +7,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="商品货号" prop="goods_sn">
-        <el-input v-model="ruleForm.goods_sn" placeholder="输入分类别名" />
+        <el-input v-model="ruleForm.goods_sn" placeholder="输入商品货号" />
       </el-form-item>
       <el-form-item label="商品名称" prop="goods_name">
-        <el-input v-model="ruleForm.goods_name" placeholder="输入分类名称" />
+        <el-input v-model="ruleForm.goods_name" placeholder="输入商品名称" />
       </el-form-item>
       <el-form-item label="商品简单描述" prop="goods_brief">
         <el-input type="textarea" v-model="ruleForm.goods_brief" />
@@ -27,11 +27,11 @@
       <el-form-item label="商品库存" prop="goods_number">
         <el-input-number v-model="ruleForm.goods_number" :min="1" />
       </el-form-item>
-      <el-form-item label="库存预警值" prop="warm_number">
-        <el-input-number v-model="ruleForm.warm_number" :min="1" :max="50" />
+      <el-form-item label="库存预警值" prop="warn_number">
+        <el-input-number v-model="ruleForm.warn_number" :min="1" :max="50" />
       </el-form-item>
       <el-form-item label="商品图片" prop="goods_img">
-        <el-upload name="file" accept=".jpg,.png,.jpeg" :headers="header" :action="path" list-type="picture-card" :data="uploadData" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
+        <el-upload name="file" accept=".jpg,.png,.jpeg" :headers="header" :action="path" list-type="picture-card" :data="{'type': 'goods_img'}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleGoodsImgSuccess">
           <i class="el-icon-plus"></i>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
@@ -85,13 +85,13 @@
             <tr v-for="(row, k) in attrs">
               <td width='10%'>{{row.attr_name}}</td>
               <td>
-                <el-checkbox-group v-if="row.attr_input_type === 1" v-model="ruleForm.attr_check_list" @change="attrCkChange($event)">
+                <el-checkbox-group v-if="row.attr_input_type === 1" v-model="ruleForm.attr_check_list" @change="attrCkChange($event, row.attr_id)">
                   <el-checkbox v-for="(item, key) in row.attr_values.split('\n')" :label="item" :key="item">{{item}}</el-checkbox>
                 </el-checkbox-group>
                 <template v-if="row.attr_cat_type === 1">
-                  <div style="float:left;margin-right:10px;" v-for="row in colorPickers">
-                  <el-color-picker :v-model="ruleForm[row.name]" :value="row.value" size="mini" :predefine="predefineColors" @change="colorPickerChange($event, row.idx)"></el-color-picker>&nbsp;&nbsp;
-                  <a href="javascript:void(0);" @click="addColorPicker($event, row.idx)"><i :class="row.iconCls"></i></a>
+                  <div style="float:left;margin-right:10px;" v-for="color in colorPickers">
+                  <el-color-picker :v-model="ruleForm[color.name]" :value="color.value" size="mini" :predefine="predefineColors" @change="colorPickerChange($event, color.idx, row.attr_id)"></el-color-picker>&nbsp;&nbsp;
+                  <a href="javascript:void(0);" @click="addColorPicker($event, color.idx)"><i :class="color.iconCls"></i></a>
                   </div>
                 </template>
               </td>
@@ -111,7 +111,7 @@
                 <td><el-input v-model="row.product_number" placeholder="0" /></td>
                 <td><el-input v-model="row.product_warn_number" placeholder="1" /></td>
                 <td><el-input v-model="row.product_sn" placeholder="" /></td>
-                <td><el-input v-model="row.product_bar_code" placeholder="" /></td>
+                <td style="display:none;"><el-input v-model="row.product_bar_code" placeholder="" /></td>
                 <td></td>
               </tr>
             </tbody>
@@ -122,11 +122,11 @@
         <template>
           <div v-if="attrImgSizeTabData.length > 0" class="attr_img">
             <div>尺码</div>
-            <div class="attr_img_item" v-for="row in attrImgSizeTabData">
+            <div class="attr_img_item" v-for="(row, key) in attrImgSizeTabData">
               <el-input v-model="row.size" size="medium" class="attr_img_input" />
               <span class="attr_img_sort">排序</span>
               <el-input v-model="row.sort" size="medium" class="attr_img_input" />
-              <el-upload class="upload-demo attr_img_upload" action="https://jsonplaceholder.typicode.com/posts/">
+              <el-upload class="upload-demo attr_img_upload" name="file" accept=".jpg,.png,.jpeg" :headers="header" :action="path" :data="{'type': 'goods_img', 'attrIdx': key}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleAttrImgSuccess">
                 <el-button size="small" type="primary">点击上传</el-button>
               </el-upload>
             </div>
@@ -160,15 +160,17 @@ export default{
       f_loading: false,
       dialogFormVisible: false,
       ruleForm: {
+        goods_id: 0,
         cat_id: 0,
         goods_sn: '',
+        bar_code: '',
         goods_name: '',
         goods_brief: '',
         shop_price: '',
         market_price: '',
         cost_price: '',
         goods_number: 1,
-        warm_number: 1,
+        warn_number: 1,
         goods_img: [],
         freight: '',
         return_type: [],
@@ -182,7 +184,11 @@ export default{
         goods_type: '',
         attr_check_list: [],
         attr_color_list: [],
-        color_0: ''
+        color_0: '',
+        color_count: 1,
+        attr_tab_data: [],
+        attr_img_size_data: [],
+        attr_color_data: []
       },
       title: '添加商品分类',
       rules: {
@@ -353,21 +359,24 @@ export default{
       this.$router.push({path: '/shop/good/index'})
     },
     async submit () {
+      this.ruleForm.attr_tab_data = this.attrTabData
+      this.ruleForm.attr_img_size_data = this.attrImgSizeTabData
+      this.ruleForm.attr_color_data = this.attrImgColorTabData
       this.f_loading = true
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           let res = []
-          if (this.type === 1) {
-            res = await api.category.save(this.ruleForm)
+          if (this.ruleForm.goods_id === 0) {
+            res = await api.good.save(this.ruleForm)
           } else {
-            res = await api.category.update(this.ruleForm)
+            res = await api.good.update(this.ruleForm)
           }
           util.response(res, this)
           this.f_loading = false
           if (res.code === 200) {
             this.dialogFormVisible = false
             util.message('操作成功')
-            this.getData()
+            this.$router.push({path: '/shop/good/index'})
           } else {
             util.message(res.error, 'error')
           }
@@ -424,12 +433,19 @@ export default{
       util.response(res, this)
       this.attrs = res.data
     },
-    handleImgSuccess (res, file) {
+    handleGoodsImgSuccess (res, file) {
       util.response(res, this)
       if (res.data) {
         let url = '/' + res.data.path + '/' + res.data.name
-        this.ruleForm.touch_icon = url
-        this.imgList.unshift({name: res.data.name, url: url})
+        this.ruleForm.goods_img.push(url)
+      }
+    },
+    handleAttrImgSuccess (res, file) {
+      util.response(res, this)
+      if (res.data) {
+        let url = '/' + res.data.path + '/' + res.data.name
+        let idx = parseInt(res.data.attrIdx)
+        this.attrImgSizeTabData[idx].img = url
       }
     },
     beforeImgUpload (file) {
@@ -464,6 +480,7 @@ export default{
       this.dialogVisible = true
     },
     addColorPicker (event, index) {
+      this.ruleForm.color_count = this.colorPickers.length
       if (event.target.className === 'el-icon-plus') {
         let idx = this.colorPickers[this.colorPickers.length - 1].idx + 1
         this.ruleForm['color_' + idx] = ''
@@ -475,9 +492,9 @@ export default{
         delete this.ruleForm['color_' + index]
       }
     },
-    colorPickerChange (value, idx) {
+    colorPickerChange (value, idx, attrId) {
       let thiz = this
-      thiz.attrTabHeader = {'size': '', 'color': '', 'price': '本店价', 'number': '库存', 'warn': '预警值', 'sn': '商品货号', 'code': '商品条形码', 'op': '操作'}
+      thiz.attrTabHeader = {'size': '', 'color': '', 'price': '本店价', 'number': '库存', 'warn': '预警值', 'sn': '商品货号', 'op': '操作'}
       thiz.ruleForm['color_' + idx] = value
       if (!value) {
         thiz.colorPickers.splice(idx, 1)
@@ -485,7 +502,7 @@ export default{
         return
       }
       thiz.ruleForm.attr_color_list.push(value)
-      thiz.attrImgColorTabData.push({'color': value, 'sort': 0})
+      thiz.attrImgColorTabData.push({'attr_id': attrId, 'color': value, 'sort': 0})
       thiz.colorPickers.forEach(function (row, key) {
         if (key === idx) {
           row.value = value
@@ -516,9 +533,9 @@ export default{
         })
       })
     },
-    attrCkChange (event) {
+    attrCkChange (event, attrId) {
       let thiz = this
-      thiz.attrTabHeader = {'size': '', 'color': '', 'price': '本店价', 'number': '库存', 'warn': '预警值', 'sn': '商品货号', 'code': '商品条形码', 'op': '操作'}
+      thiz.attrTabHeader = {'size': '', 'color': '', 'price': '本店价', 'number': '库存', 'warn': '预警值', 'sn': '商品货号', 'op': '操作'}
       thiz.attrTabData = []
       thiz.attrImgSizeTabData = []
       thiz.ruleForm.attr_check_list.forEach(function (item) {
@@ -531,7 +548,7 @@ export default{
           'product_sn': '',
           'product_bar_code': ''
         })
-        thiz.attrImgSizeTabData.push({'size': item, 'sort': 0})
+        thiz.attrImgSizeTabData.push({'attr_id': attrId, 'size': item, 'sort': 0, 'img': ''})
       })
       if (thiz.ruleForm.attr_color_list.length > 0) {
         thiz.attrTabHeader.color = '颜色'
@@ -565,9 +582,10 @@ export default{
         'X-Requested-Token': sessionStorage.getItem('token') ? sessionStorage.getItem('token') : null
       }
     },
-    uploadData () {
+    uploadData (idx) {
       return {
-        'type': 'goods_img'
+        'type': 'goods_img',
+        'attrIdx': idx
       }
     }
   },
