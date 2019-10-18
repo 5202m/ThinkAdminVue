@@ -90,3 +90,25 @@ Vue.filter('attrTypeFilter', function (value) {
     return '复选属性'
   }
 })
+
+Vue.filter('freightFilter', function (value) {
+  if (value === 0) {
+    return '按地区运费(配送方式)'
+  } else if (value === 1) {
+    return '按固定运费'
+  } else if (value === 2) {
+    return '按运费模板'
+  }
+})
+
+Vue.filter('reviewStatusFilter', function (value) {
+  if (value === 1) {
+    return '未审核'
+  } else if (value === 2) {
+    return '审核未通过'
+  } else if (value === 3 || value === 4) {
+    return '审核已通过'
+  } else if (value === 5) {
+    return '无需审核'
+  }
+})

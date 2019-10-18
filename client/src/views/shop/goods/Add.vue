@@ -46,8 +46,10 @@
         <el-radio-group v-model="ruleForm.freight">
           <el-radio :label="0">按地区运费</el-radio>
           <el-radio :label="1">按固定运费</el-radio>
-          <el-radio :label="2">按运费模板</el-radio>
+          <!--el-radio :label="2">按运费模板</el-radio-->
         </el-radio-group>
+        <br />
+        <el-input-number v-if="ruleForm.freight === 1" v-model="ruleForm.shipping_fee" :min="1" :max="1000" />
       </el-form-item>
       <el-form-item label="退货标识" v-model="ruleForm.return_type" prop="return_type">
         <el-checkbox-group v-model="ruleForm.return_type">
@@ -173,6 +175,7 @@ export default{
         warn_number: 1,
         goods_img: [],
         freight: '',
+        shipping_fee: 0,
         return_type: [],
         goods_desc: '',
         sort_order: 0,
@@ -182,6 +185,7 @@ export default{
         is_on_sale: true,
         is_alone_sale: true,
         goods_type: '',
+        review_status: 5,
         attr_check_list: [],
         attr_color_list: [],
         color_0: '',

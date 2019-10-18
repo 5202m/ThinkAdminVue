@@ -19,7 +19,7 @@ class Goods extends Model
     public function getGoods($where = [], $page = 1, $pageSize = 10)
     {
         $count = $this->where($where)->count();
-        $res = $this->where($where)->page($page, $pageSize)->order(['sort_order'=>'desc', 'goods_id'=>'desc'])->select();
+        $res = $this->with(['goodsAttr', 'products'])->where($where)->page($page, $pageSize)->order(['sort_order'=>'desc', 'goods_id'=>'desc'])->select();
         if ($res) {
             $res = $res->toArray();
         }
@@ -81,7 +81,6 @@ class Goods extends Model
                 foreach ($param['attr_img_size_data'] as $row){
                     $goodsAttrSizeParam[] = array('goods_id'=>$goodsId, 'attr_id'=>$row['attr_id'], 'attr_value'=>$row['size'], 'attr_img_file'=>$row['img'], 'attr_sort'=>$row['sort'], 'admin_id'=>$admin_id);
                 }
-                $this->error = '83';
                 $goodsAttr->saveAll($goodsAttrSizeParam);
                 $attrWhere = array('goods_id'=>$goodsId, 'attr_id'=>$param['attr_img_size_data'][0]['attr_id']);
                 $goodsAttrArr['size'] = $goodsAttr->where($attrWhere)->column('goods_attr_id');
@@ -179,7 +178,7 @@ class Goods extends Model
         }
     }
 
-    public function goodsAttrs()
+    public function goodsAttr()
     {
         return $this->hasMany('GoodsAttr', 'goods_id', 'goods_id');
     }

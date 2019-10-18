@@ -4,22 +4,35 @@
     <el-table :data="data.data" border v-loading="loading">
       <el-table-column prop="goods_id" label="编号" align="center"></el-table-column>
       <el-table-column prop="goods_name" label="商品名称" align="center"></el-table-column>
-      <el-table-column prop="remark" label="价格/货号/运费" align="center"></el-table-column>
-      <el-table-column prop="status" label="标签" align="center">
+      <el-table-column prop="price_sn_fee" label="价格/货号/运费" align="left">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilterType">{{scope.row.status | statusFilter}}</el-tag>
+          <span>价格：{{scope.row.shop_price}}</span><br />
+          <span>货号：{{scope.row.goods_sn}}</span><br />
+          <span>运费：{{scope.row.freight | freightFilter}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="status_tag" label="标签" align="left">
+        <template slot-scope="scope">
+          <span>精品：<el-switch v-model="scope.row.is_best.toString()" active-value="1" inactive-value="0" /></span><br />
+          <span>新品：<el-switch v-model="scope.row.is_new.toString()" active-value="1" inactive-value="0" /></span><br />
+          <span>热销：<el-switch v-model="scope.row.is_hot.toString()" active-value="1" inactive-value="0" /></span><br />
+          <span>上架：<el-switch v-model="scope.row.is_on_sale.toString()" active-value="1" inactive-value="0" /></span>
         </template>
       </el-table-column>
       <el-table-column prop="sort_order" label="排序" align="center"></el-table-column>
       <el-table-column prop="sku" label="SKU/库存" align="center"></el-table-column>
-      <el-table-column prop="review_status" label="审核状态" align="center"></el-table-column>
-      <el-table-column label="操作" width="260" align="center" fixed="right">
+      <el-table-column prop="review_status" label="审核状态" align="center">
         <template slot-scope="scope">
+          <el-tag>{{scope.row.review_status | reviewStatusFilter}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="260" align="center" fixed="right">
+        <!--template slot-scope="scope">
           <el-button size="mini" type="primary" plain @click="edit(scope.row)">编辑</el-button>
           <el-button v-if="scope.row.status==1" size="mini" plain type="warning" @click="enable(scope.row)">禁用</el-button>
           <el-button v-else size="mini" plain type="success" @click="enable(scope.row)">启用</el-button>
           <el-button size="mini" type="danger" plain @click="del(scope.row,scope.$index)">删除</el-button>
-        </template>
+        </template-->
       </el-table-column>
     </el-table>
     <div class="block">
