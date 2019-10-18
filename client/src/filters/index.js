@@ -1,6 +1,7 @@
 // 全局过滤
 import Vue from 'vue'
 import moment from 'moment'
+import http from '@/utils/http'
 
 Vue.filter('statusFilter', function (value) {
   if (value) {
@@ -111,4 +112,8 @@ Vue.filter('reviewStatusFilter', function (value) {
   } else if (value === 5) {
     return '无需审核'
   }
+})
+
+Vue.filter('showImgFilter', function (value) {
+  return http.baseURL + value
 })

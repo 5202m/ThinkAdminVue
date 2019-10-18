@@ -3,7 +3,12 @@
     <el-button class="mb-20" type="primary" icon="el-icon-plus" @click="add">添加</el-button>
     <el-table :data="data.data" border v-loading="loading">
       <el-table-column prop="goods_id" label="编号" align="center"></el-table-column>
-      <el-table-column prop="goods_name" label="商品名称" align="center"></el-table-column>
+      <el-table-column prop="goods_name_img" label="商品名称" align="center">
+        <template slot-scope="scope">
+          <el-image style="width:100px;height:100px" :src="scope.row.goods_img | showImgFilter" fit="fill"></el-image>
+          <span>{{scope.row.goods_name}}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="price_sn_fee" label="价格/货号/运费" align="left">
         <template slot-scope="scope">
           <span>价格：{{scope.row.shop_price}}</span><br />
@@ -13,10 +18,10 @@
       </el-table-column>
       <el-table-column prop="status_tag" label="标签" align="left">
         <template slot-scope="scope">
-          <span>精品：<el-switch v-model="scope.row.is_best.toString()" active-value="1" inactive-value="0" /></span><br />
-          <span>新品：<el-switch v-model="scope.row.is_new.toString()" active-value="1" inactive-value="0" /></span><br />
-          <span>热销：<el-switch v-model="scope.row.is_hot.toString()" active-value="1" inactive-value="0" /></span><br />
-          <span>上架：<el-switch v-model="scope.row.is_on_sale.toString()" active-value="1" inactive-value="0" /></span>
+          <span>精品：<el-switch v-model="scope.row.is_best + ''" active-value="1" inactive-value="0" @change="enable(scope.row, 'is_best')" /></span><br />
+          <span>新品：<el-switch v-model="scope.row.is_new + ''" active-value="1" inactive-value="0" @change="enable(scope.row, 'is_new')" /></span><br />
+          <span>热销：<el-switch v-model="scope.row.is_hot + ''" active-value="1" inactive-value="0" @change="enable(scope.row, 'is_hot')" /></span><br />
+          <span>上架：<el-switch v-model="scope.row.is_on_sale + ''" active-value="1" inactive-value="0" @change="enable(scope.row, 'is_on_sale')" /></span>
         </template>
       </el-table-column>
       <el-table-column prop="sort_order" label="排序" align="center"></el-table-column>
@@ -118,15 +123,23 @@ export default{
         }
       })
     },
-    async enable (e) {
+    async enable (e, key) {
       let data = {
-        'id': e.id,
-        'status': e.status ? 0 : 1
+        'id': e.goods_id
+      }
+      if (key === 'is_best') {
+        data.is_best = e.is_best ? 0 : 1
+      } else if (key === 'is_new') {
+        data.is_new = e.is_new ? 0 : 1
+      } else if (key === 'is_hot') {
+        data.is_hot = e.is_hot ? 0 : 1
+      } else if (key === 'is_on_sale') {
+        data.is_on_sale = e.is_on_sale ? 0 : 1
       }
       let res = await api.good.enable(data)
       util.response(res, this)
       if (res.code === 200) {
-        e.status = e.status ? 0 : 1
+        e[key] = e[key] ? 0 : 1
       } else {
         util.message(res.error, 'error')
       }

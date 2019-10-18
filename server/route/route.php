@@ -40,6 +40,7 @@ Route::post('position/enable', 'admin/position/enable');
 Route::post('department/enable', 'admin/department/enable');
 Route::post('menu/enable', 'admin/menu/enable');
 Route::post('category/enable', 'admin/category/enable');
+Route::post('good/enable', 'admin/goods/enable');
 
 Route::get('goodType/list', 'admin/goodsType/goodsTypes');
 Route::get('attr/list', 'admin/attribute/attrList');

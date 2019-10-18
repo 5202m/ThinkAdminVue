@@ -111,7 +111,44 @@ class Goods extends Comm
      */
     public function update()
     {
-        //
+        if (!$this->checkRule()) {
+            return msg(102, null, '您没有权限操作');
+        }
+        if ($this->param['id']) {
+            $id = $this->param['id'];
+            unset($this->param['id']);
+        } else {
+            return msg(100, null, '参数错误');
+        }
+        $ret = $this->model->updateGood($id, $this->param);
+        if ($ret) {
+            return msg(200, null, '更新成功');
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
+    }
+
+    /**
+     * 更新商品各个状态
+     * @return false|string
+     */
+    public function enable()
+    {
+        if (!$this->checkRule()) {
+            return msg(102, null, '您没有权限操作');
+        }
+        if ($this->param['id']) {
+            $id = $this->param['id'];
+            unset($this->param['id']);
+        } else {
+            return msg(100, null, '参数错误');
+        }
+        $ret = $this->model->updateGoodStatus($id, $this->param);
+        if ($ret) {
+            return msg(200, null, '更新成功');
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
     }
 
     /**
