@@ -34,7 +34,7 @@ class Goods extends Model
      */
     public function getGoodById($id = null)
     {
-        $res = $this->getById($id);
+        $res = $this->with(['goodsAttr', 'products'])->where(['goods_id' => $id])->findOrEmpty();
         if ($res) {
             return $res;
         } else {
@@ -142,6 +142,7 @@ class Goods extends Model
     public function updateGood($id = null, $param = [], $flag = true)
     {
         $goodsParam = $param;
+        $goodsId = $param['goods_id'];
         $admin_id = $param['admin_id'];
         if(empty($goodsParam['goods_sn'])){
             $goodsParam['goods_sn'] = $this->productSn();
@@ -154,7 +155,7 @@ class Goods extends Model
                 unset($goodsParam['color_'.$i]);
             }
         }
-        unset($goodsParam['attr_check_list'],$goodsParam['attr_color_list'],$goodsParam['attr_tab_data'],$goodsParam['attr_img_size_data'],$goodsParam['attr_color_data'],$goodsParam['return_type'],$goodsParam['admin_id'],$goodsParam['color_count']);
+        unset($goodsParam['goods_id'],$goodsParam['attr_check_list'],$goodsParam['attr_color_list'],$goodsParam['attr_tab_data'],$goodsParam['attr_img_size_data'],$goodsParam['attr_color_data'],$goodsParam['return_type'],$goodsParam['admin_id'],$goodsParam['color_count']);
 
         $validate = validate($this->name);
         if (!$validate->check($goodsParam)) {
@@ -163,10 +164,10 @@ class Goods extends Model
         }
         $this->startTrans();
         try {
-            $goodsId = $this->insertGetId($goodsParam);
+            $this->allowField(true)->save($goodsParam, ['goods_id' => $goodsId]);
             //先保存商品，然后取出商品ID
             $goodsAttrSizeParam = $goodsAttrColorParam = $productsParam = array();
-            $goodsAttrArr = array('size'=>[],'color'=>[]);
+            $goodsAttrArr = array('size' => [],'color' => []);
             $goodsAttr = new GoodsAttr();
             if(isset($param['attr_img_size_data'])) {
                 foreach ($param['attr_img_size_data'] as $row){

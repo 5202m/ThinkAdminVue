@@ -3,20 +3,20 @@
     <el-button class="mb-20" type="primary" icon="el-icon-plus" @click="add">添加</el-button>
     <el-table :data="data.data" border v-loading="loading">
       <el-table-column prop="goods_id" label="编号" align="center"></el-table-column>
-      <el-table-column prop="goods_name_img" label="商品名称" align="center">
+      <el-table-column label="商品名称" align="center">
         <template slot-scope="scope">
           <el-image style="width:100px;height:100px" :src="scope.row.goods_img | showImgFilter" fit="fill"></el-image>
           <span>{{scope.row.goods_name}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="price_sn_fee" label="价格/货号/运费" align="left">
+      <el-table-column label="价格/货号/运费" align="left">
         <template slot-scope="scope">
           <span>价格：{{scope.row.shop_price}}</span><br />
           <span>货号：{{scope.row.goods_sn}}</span><br />
           <span>运费：{{scope.row.freight | freightFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="status_tag" label="标签" align="left">
+      <el-table-column label="标签" align="left">
         <template slot-scope="scope">
           <span>精品：<el-switch v-model="scope.row.is_best + ''" active-value="1" inactive-value="0" @change="enable(scope.row, 'is_best')" /></span><br />
           <span>新品：<el-switch v-model="scope.row.is_new + ''" active-value="1" inactive-value="0" @change="enable(scope.row, 'is_new')" /></span><br />
@@ -26,18 +26,18 @@
       </el-table-column>
       <el-table-column prop="sort_order" label="排序" align="center"></el-table-column>
       <el-table-column prop="sku" label="SKU/库存" align="center"></el-table-column>
-      <el-table-column prop="review_status" label="审核状态" align="center">
+      <el-table-column label="审核状态" align="center">
         <template slot-scope="scope">
           <el-tag>{{scope.row.review_status | reviewStatusFilter}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="260" align="center" fixed="right">
-        <!--template slot-scope="scope">
+        <template slot-scope="scope">
           <el-button size="mini" type="primary" plain @click="edit(scope.row)">编辑</el-button>
-          <el-button v-if="scope.row.status==1" size="mini" plain type="warning" @click="enable(scope.row)">禁用</el-button>
-          <el-button v-else size="mini" plain type="success" @click="enable(scope.row)">启用</el-button>
-          <el-button size="mini" type="danger" plain @click="del(scope.row,scope.$index)">删除</el-button>
-        </template-->
+          <!--el-button v-if="scope.row.status==1" size="mini" plain type="warning" @click="enable(scope.row)">禁用</el-button>
+          <el-button v-else size="mini" plain type="success" @click="enable(scope.row)">启用</el-button-->
+          <el-button size="mini" type="danger" plain @click="del(scope.row, scope.$index)">删除</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <div class="block">
@@ -96,7 +96,7 @@ export default{
       this.$router.push({path: '/shop/good/add'})
     },
     edit (e) {
-      this.$router.push({path: '/shop/good/add/' + e.id})
+      this.$router.push({path: '/shop/good/add?id=' + e.goods_id})
     },
     async submit () {
       this.f_loading = true

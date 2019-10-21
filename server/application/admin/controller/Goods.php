@@ -91,7 +91,13 @@ class Goods extends Comm
      */
     public function read()
     {
-        //
+        $goods_id = $this->param['id'];
+        $ret = $this->model->getGoodById($goods_id);
+        if ($ret) {
+            return msg(200, $ret);
+        } else {
+            return msg(100, null, $this->model->getError());
+        }
     }
 
     /**

@@ -53,7 +53,7 @@
       </el-form-item>
       <el-form-item label="退货标识" v-model="ruleForm.return_type" prop="return_type">
         <el-checkbox-group v-model="ruleForm.return_type">
-          <el-checkbox v-for="(item, key) in returnTypeOptions" :label="key" :key="key">{{item}}</el-checkbox>
+          <el-checkbox v-for="(item, key) in returnTypeOptions" :label=key :key=key :true-label=key false-label=0>{{item}}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="详细描述" prop="goods_desc">
@@ -66,15 +66,15 @@
         <el-input v-model="ruleForm.icon" />
       </el-form-item-->
       <el-form-item label="加入推荐">
-        <el-checkbox :label="1" prop="is_best" v-model="ruleForm.is_best">精品</el-checkbox>
-        <el-checkbox :label="1" prop="is_new" v-model="ruleForm.is_new">新品</el-checkbox>
-        <el-checkbox :label="1" prop="is_hot" v-model="ruleForm.is_hot">热销</el-checkbox>
+        <el-checkbox :label=1 prop="is_best" v-model="ruleForm.is_best" true-label=1 false-label=0>精品</el-checkbox>
+        <el-checkbox :label=1 prop="is_new" v-model="ruleForm.is_new" true-label=1 false-label=0>新品</el-checkbox>
+        <el-checkbox :label=1 prop="is_hot" v-model="ruleForm.is_hot" true-label=1 false-label=0>热销</el-checkbox>
       </el-form-item>
       <el-form-item label="上架">
-        <el-switch v-model="ruleForm.is_on_sale" />
+        <el-switch v-model="ruleForm.is_on_sale" active-value=1 inactive-value=0 />
       </el-form-item>
       <el-form-item label="能作为普通商品销售">
-        <el-switch v-model="ruleForm.is_alone_sale" />
+        <el-switch v-model="ruleForm.is_alone_sale" active-value=1 inactive-value=0 />
       </el-form-item>
       <el-form-item label="属性类型">
         <el-select v-model="ruleForm.goods_type" placeholder="请选择" @change="getAttrs($event)">
@@ -179,11 +179,11 @@ export default{
         return_type: [],
         goods_desc: '',
         sort_order: 0,
-        is_best: false,
-        is_new: false,
-        is_hot: false,
-        is_on_sale: true,
-        is_alone_sale: true,
+        is_best: 0,
+        is_new: 0,
+        is_hot: 0,
+        is_on_sale: 1,
+        is_alone_sale: 1,
         goods_type: '',
         review_status: 5,
         attr_check_list: [],
@@ -427,6 +427,13 @@ export default{
       if (this.goodsTypeData == null) {
         this.goodsTypeData = []
       }
+      let goodsId = this.$route.query.id
+      if (goodsId) {
+        let goodsInfo = await api.good.read(goodsId)
+        util.response(goodsInfo, this)
+        this.ruleForm = goodsInfo.data
+        this.ruleForm.goods_img = goodsInfo.data.goods_img.split(',')
+      }
     },
     async getAttrs (event) {
       this.attrTabData = []
@@ -472,7 +479,6 @@ export default{
     },
     onContentChange (val) {
       this.editorTextCopy = val
-      console.log(this.editorTextCopy)
     },
     afterChange () {
     },
