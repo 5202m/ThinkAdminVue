@@ -443,16 +443,38 @@ export default{
         this.ruleForm.is_on_sale = goodInfo.is_on_sale === 1
         this.ruleForm.is_alone_sale = goodInfo.is_alone_sale === 1
         this.ruleForm.goods_img = goodInfo.goods_img.split(',')
+        this.ruleForm.attr_check_list = []
+        this.colorPickers = []
+        this.getAttrs(goodInfo.goods_type)
       }
     },
     async getAttrs (event) {
-      this.attrTabData = []
+      let thiz = this
+      thiz.attrTabData = []
       let _params = {
         cat_id: event
       }
       let res = await api.attribute.list(_params)
-      util.response(res, this)
-      this.attrs = res.data
+      util.response(res, thiz)
+      thiz.attrs = res.data
+      if (thiz.$route.query.id) {
+        let idx = 0
+        thiz.attrs.forEach(function (row) {
+          thiz.ruleForm.goods_attr.forEach(function (item) {
+            if (row.attr_input_type === 1 && row.attr_id === item.attr_id) {
+              thiz.ruleForm.attr_check_list.push(item.attr_value)
+            }
+            if (row.attr_cat_type === 1 && row.attr_id === item.attr_id) {
+              if (thiz.colorPickers.length > 0) {
+                thiz.colorPickers.push({idx: idx, iconCls: 'el-icon-minus', name: 'color_' + idx, value: item.attr_value})
+              } else {
+                thiz.colorPickers.push({idx: idx, iconCls: 'el-icon-plus', name: 'color_' + idx, value: item.attr_value})
+              }
+              idx++
+            }
+          })
+        })
+      }
     },
     handleGoodsImgSuccess (res, file) {
       util.response(res, this)
