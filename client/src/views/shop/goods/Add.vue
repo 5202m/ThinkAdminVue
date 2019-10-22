@@ -53,7 +53,7 @@
       </el-form-item>
       <el-form-item label="退货标识" v-model="ruleForm.return_type" prop="return_type">
         <el-checkbox-group v-model="ruleForm.return_type">
-          <el-checkbox v-for="(item, key) in returnTypeOptions" :label=key :key=key :true-label=key false-label=0>{{item}}</el-checkbox>
+          <el-checkbox v-for="(item, key) in returnTypeOptions" :label=item.val :key=item.val>{{item.lab}}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="详细描述" prop="goods_desc">
@@ -66,15 +66,15 @@
         <el-input v-model="ruleForm.icon" />
       </el-form-item-->
       <el-form-item label="加入推荐">
-        <el-checkbox :label=1 prop="is_best" v-model="ruleForm.is_best" true-label=1 false-label=0>精品</el-checkbox>
-        <el-checkbox :label=1 prop="is_new" v-model="ruleForm.is_new" true-label=1 false-label=0>新品</el-checkbox>
-        <el-checkbox :label=1 prop="is_hot" v-model="ruleForm.is_hot" true-label=1 false-label=0>热销</el-checkbox>
+        <el-checkbox :label=1 prop="is_best" v-model="ruleForm.is_best">精品</el-checkbox>
+        <el-checkbox :label=1 prop="is_new" v-model="ruleForm.is_new">新品</el-checkbox>
+        <el-checkbox :label=1 prop="is_hot" v-model="ruleForm.is_hot">热销</el-checkbox>
       </el-form-item>
       <el-form-item label="上架">
-        <el-switch v-model="ruleForm.is_on_sale" active-value=1 inactive-value=0 />
+        <el-switch v-model="ruleForm.is_on_sale" />
       </el-form-item>
       <el-form-item label="能作为普通商品销售">
-        <el-switch v-model="ruleForm.is_alone_sale" active-value=1 inactive-value=0 />
+        <el-switch v-model="ruleForm.is_alone_sale" />
       </el-form-item>
       <el-form-item label="属性类型">
         <el-select v-model="ruleForm.goods_type" placeholder="请选择" @change="getAttrs($event)">
@@ -88,7 +88,7 @@
               <td width='10%'>{{row.attr_name}}</td>
               <td>
                 <el-checkbox-group v-if="row.attr_input_type === 1" v-model="ruleForm.attr_check_list" @change="attrCkChange($event, row.attr_id)">
-                  <el-checkbox v-for="(item, key) in row.attr_values.split('\n')" :label="item" :key="item">{{item}}</el-checkbox>
+                  <el-checkbox v-for="item in row.attr_values.split('\n')" :label="item" :key="item">{{item}}</el-checkbox>
                 </el-checkbox-group>
                 <template v-if="row.attr_cat_type === 1">
                   <div style="float:left;margin-right:10px;" v-for="color in colorPickers">
@@ -99,7 +99,7 @@
               </td>
             </tr>
           </table>
-          <table width="100%" v-if="attrTabData.length > 0" class="table table-bordered">
+          <table width="100%" v-if="attrTabData !== undefined && attrTabData.length > 0" class="table table-bordered">
             <thead>
               <tr style="border: 1px #EBEEF5 solid;">
                 <th v-for="(val, key) in attrTabHeader" v-if="val !== ''" style="width:10%;border: 0px #EBEEF5 solid" align="center">{{val}}</th>
@@ -120,9 +120,9 @@
           </table>
         </template>
       </el-form-item>
-      <el-form-item label="属性图片" v-if="ruleForm.goods_type != '' && (attrImgSizeTabData.length > 0 || attrImgColorTabData.length > 0)">
+      <el-form-item label="属性图片" v-if="ruleForm.goods_type != '' && ((attrImgSizeTabData !== undefined && attrImgSizeTabData.length > 0) || (attrImgColorTabData !== undefined && attrImgColorTabData.length > 0))">
         <template>
-          <div v-if="attrImgSizeTabData.length > 0" class="attr_img">
+          <div v-if="attrImgSizeTabData !== undefined && attrImgSizeTabData.length > 0" class="attr_img">
             <div>尺码</div>
             <div class="attr_img_item" v-for="(row, key) in attrImgSizeTabData">
               <el-input v-model="row.size" size="medium" class="attr_img_input" />
@@ -133,7 +133,7 @@
               </el-upload>
             </div>
           </div>
-          <div v-if="attrImgColorTabData.length > 0" class="attr_img">
+          <div v-if="attrImgColorTabData !== undefined && attrImgColorTabData.length > 0" class="attr_img">
             <div>颜色</div>
             <div class="attr_img_item" v-for="row in attrImgColorTabData">
               <el-input v-model="row.color" size="medium" class="attr_img_input" />
@@ -179,11 +179,11 @@ export default{
         return_type: [],
         goods_desc: '',
         sort_order: 0,
-        is_best: 0,
-        is_new: 0,
-        is_hot: 0,
-        is_on_sale: 1,
-        is_alone_sale: 1,
+        is_best: false,
+        is_new: false,
+        is_hot: false,
+        is_on_sale: true,
+        is_alone_sale: true,
         goods_type: '',
         review_status: 5,
         attr_check_list: [],
@@ -215,7 +215,7 @@ export default{
       type: 2,
       path: upload.upload(),
       imgList: [],
-      returnTypeOptions: ['维修', '退货', '换货', '仅退款'],
+      returnTypeOptions: [{'lab': '维修', 'val': '0'}, {'lab': '退货', 'val': '1'}, {'lab': '换货', 'val': '2'}, {'lab': '仅退款', 'val': '3'}],
       editorText: '直接初始化值',
       editorTextCopy: '',
       dialogImageUrl: '',
@@ -427,12 +427,22 @@ export default{
       if (this.goodsTypeData == null) {
         this.goodsTypeData = []
       }
+      this.getGoodsInfo()
+    },
+    async getGoodsInfo () {
       let goodsId = this.$route.query.id
       if (goodsId) {
         let goodsInfo = await api.good.read(goodsId)
         util.response(goodsInfo, this)
-        this.ruleForm = goodsInfo.data
-        this.ruleForm.goods_img = goodsInfo.data.goods_img.split(',')
+        let goodInfo = goodsInfo.data
+        this.ruleForm = goodInfo
+        this.ruleForm.return_type = goodInfo.goods_cause.split(',')
+        this.ruleForm.is_best = goodInfo.is_best === 1
+        this.ruleForm.is_new = goodInfo.is_new === 1
+        this.ruleForm.is_hot = goodInfo.is_hot === 1
+        this.ruleForm.is_on_sale = goodInfo.is_on_sale === 1
+        this.ruleForm.is_alone_sale = goodInfo.is_alone_sale === 1
+        this.ruleForm.goods_img = goodInfo.goods_img.split(',')
       }
     },
     async getAttrs (event) {
