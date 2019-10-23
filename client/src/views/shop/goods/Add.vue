@@ -124,7 +124,7 @@
               <el-input v-model="row.size" size="medium" class="attr_img_input" />
               <span class="attr_img_sort">排序</span>
               <el-input v-model="row.sort" size="medium" class="attr_img_input" />
-              <el-upload class="upload-demo attr_img_upload" name="file" accept=".jpg,.png,.jpeg" :headers="header" :action="path" :data="{'type': 'goods_img', 'attrIdx': key}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleAttrImgSuccess">
+              <el-upload class="upload-demo attr_img_upload" name="file" accept=".jpg,.png,.jpeg" :on-exceed="handleExceed" limit="1" :file-list="showImg(row.img)" :headers="header" :action="path" :data="{'type': 'goods_img', 'attrIdx': key}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleAttrImgSuccess">
                 <el-button size="small" type="primary">点击上传</el-button>
               </el-upload>
             </div>
@@ -135,7 +135,7 @@
               <el-input v-model="row.color" size="medium" class="attr_img_input" />
               <span class="attr_img_sort">排序</span>
               <el-input v-model="row.sort" size="medium" class="attr_img_input" />
-              <el-upload class="upload-demo attr_img_upload" name="file" accept=".jpg,.png,.jpeg" :headers="header" :action="path" :data="{'type': 'goods_img', 'attrIdx': key}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleColorImgSuccess">
+              <el-upload class="upload-demo attr_img_upload" name="file" accept=".jpg,.png,.jpeg" :on-exceed="handleExceed" limit="1" :file-list="showImg(row.img)" :headers="header" :action="path" :data="{'type': 'goods_img', 'attrIdx': key}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleColorImgSuccess">
                 <el-button size="small" type="primary">点击上传</el-button>
               </el-upload>
             </div>
@@ -226,7 +226,7 @@ export default{
         name: 'color_0',
         value: ''
       }],
-      attrTabHeader: {},
+      attrTabHeader: {'size': '', 'color': '', 'price': '本店价', 'number': '库存', 'warn': '预警值', 'sn': '商品货号', 'op': '操作'},
       attrTabData: [],
       attrImgSizeTabData: [],
       attrImgColorTabData: [],
@@ -448,7 +448,9 @@ export default{
           thiz.imgList.push({'name': '', 'url': url})
         })
         thiz.ruleForm.attr_check_list = []
+        thiz.ruleForm.attr_color_list = []
         thiz.colorPickers = []
+        thiz.attrImgColorTabData = []
         thiz.getAttrs(goodInfo.goods_type)
       }
     },
@@ -467,6 +469,7 @@ export default{
           thiz.ruleForm.goods_attr.forEach(function (item) {
             if (row.attr_input_type === 1 && row.attr_id === item.attr_id) {
               thiz.ruleForm.attr_check_list.push(item.attr_value)
+              thiz.attrImgSizeTabData.push({'attr_id': item.attr_id, 'size': item.attr_value, 'sort': item.attr_sort, 'img': item.attr_img_file})
             }
             if (row.attr_cat_type === 1 && row.attr_id === item.attr_id) {
               if (thiz.colorPickers.length > 0) {
@@ -474,10 +477,18 @@ export default{
               } else {
                 thiz.colorPickers.push({idx: idx, iconCls: 'el-icon-plus', name: 'color_' + idx, value: item.attr_value})
               }
+              thiz.ruleForm.attr_color_list.push(item.attr_value)
+              thiz.attrImgColorTabData.push({'attr_id': item.attr_id, 'color': item.attr_value, 'sort': item.attr_sort, 'img': item.attr_img_file})
               idx++
             }
           })
         })
+        if (thiz.ruleForm.attr_color_list.length > 0) {
+          thiz.attrTabHeader.color = '颜色'
+        }
+        if (thiz.ruleForm.attr_check_list.length > 0) {
+          thiz.attrTabHeader.size = '尺码'
+        }
       }
     },
     handleGoodsImgSuccess (res, file) {
@@ -534,6 +545,9 @@ export default{
       this.dialogImageUrl = file.url
       this.dialogVisible = true
     },
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
     addColorPicker (event, index) {
       this.ruleForm.color_count = this.colorPickers.length
       if (event.target.className === 'el-icon-plus') {
@@ -549,7 +563,6 @@ export default{
     },
     colorPickerChange (value, idx, attrId) {
       let thiz = this
-      thiz.attrTabHeader = {'size': '', 'color': '', 'price': '本店价', 'number': '库存', 'warn': '预警值', 'sn': '商品货号', 'op': '操作'}
       thiz.ruleForm['color_' + idx] = value
       if (!value) {
         thiz.colorPickers.splice(idx, 1)
@@ -590,7 +603,6 @@ export default{
     },
     attrCkChange (event, attrId) {
       let thiz = this
-      thiz.attrTabHeader = {'size': '', 'color': '', 'price': '本店价', 'number': '库存', 'warn': '预警值', 'sn': '商品货号', 'op': '操作'}
       thiz.attrTabData = []
       thiz.attrImgSizeTabData = []
       thiz.ruleForm.attr_check_list.forEach(function (item) {
@@ -629,6 +641,11 @@ export default{
           }
         })
       })
+    },
+    showImg (value) {
+      if (value) {
+        return [{'name': '', 'url': util.setImgUrl(value)}]
+      }
     }
   },
   computed: {
