@@ -87,7 +87,7 @@ class Goods extends Model
             }
             if(isset($param['attr_color_data'])){
                 foreach ($param['attr_color_data'] as $row){
-                    $goodsAttrColorParam[] = array('goods_id'=>$goodsId, 'attr_id'=>$row['attr_id'], 'attr_value'=>$row['color'], 'attr_sort'=>$row['sort'], 'admin_id'=>$admin_id);
+                    $goodsAttrColorParam[] = array('goods_id'=>$goodsId, 'attr_id'=>$row['attr_id'], 'attr_value'=>$row['color'], 'attr_img_file'=>$row['img'], 'attr_sort'=>$row['sort'], 'admin_id'=>$admin_id);
                 }
                 $goodsAttr->saveAll($goodsAttrColorParam);
                 $attrWhere = array('goods_id'=>$goodsId, 'attr_id'=>$param['attr_color_data'][0]['attr_id']);

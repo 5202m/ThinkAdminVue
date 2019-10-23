@@ -90,6 +90,10 @@ let setUser = (data, vm) => {
   vm.$store.dispatch('setUserInfo', user)
 }
 
+let setImgUrl = (val) => {
+  return http.baseURL + val
+}
+
 // 深拷贝
 let cloneDeep = (val) => {
   return _.cloneDeep(val)
@@ -104,5 +108,6 @@ export default {
   setComponent,
   clearSome,
   setUser,
+  setImgUrl,
   cloneDeep
 }

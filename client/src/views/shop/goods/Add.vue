@@ -31,16 +31,12 @@
         <el-input-number v-model="ruleForm.warn_number" :min="1" :max="50" />
       </el-form-item>
       <el-form-item label="商品图片" prop="goods_img">
-        <el-upload name="file" accept=".jpg,.png,.jpeg" :headers="header" :action="path" list-type="picture-card" :data="{'type': 'goods_img'}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleGoodsImgSuccess">
+        <el-upload name="file" accept=".jpg,.png,.jpeg" :headers="header" :action="path" :file-list="imgList" list-type="picture-card" :data="{'type': 'goods_img'}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleGoodsImgSuccess">
           <i class="el-icon-plus"></i>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
-        <!--el-upload class="upload-demo" :headers="header" show-file-list="true" name="file" accept=".jpg,.png,.jpeg" :action="path" :file-list="imgList" :data="uploadData" :show-file-list="false" :on-success="handleImgSuccess" :before-upload="beforeImgUpload">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">注：手机端专用,建议上传正方形图片（100*100）</div>
-        </el-upload-->
       </el-form-item>
       <el-form-item label="商品运费" prop="freight">
         <el-radio-group v-model="ruleForm.freight">
@@ -139,6 +135,9 @@
               <el-input v-model="row.color" size="medium" class="attr_img_input" />
               <span class="attr_img_sort">排序</span>
               <el-input v-model="row.sort" size="medium" class="attr_img_input" />
+              <el-upload class="upload-demo attr_img_upload" name="file" accept=".jpg,.png,.jpeg" :headers="header" :action="path" :data="{'type': 'goods_img', 'attrIdx': key}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleColorImgSuccess">
+                <el-button size="small" type="primary">点击上传</el-button>
+              </el-upload>
             </div>
           </div>
         </template>
@@ -430,22 +429,27 @@ export default{
       this.getGoodsInfo()
     },
     async getGoodsInfo () {
-      let goodsId = this.$route.query.id
+      let thiz = this
+      let goodsId = thiz.$route.query.id
       if (goodsId) {
         let goodsInfo = await api.good.read(goodsId)
-        util.response(goodsInfo, this)
+        util.response(goodsInfo, thiz)
         let goodInfo = goodsInfo.data
-        this.ruleForm = goodInfo
-        this.ruleForm.return_type = goodInfo.goods_cause.split(',')
-        this.ruleForm.is_best = goodInfo.is_best === 1
-        this.ruleForm.is_new = goodInfo.is_new === 1
-        this.ruleForm.is_hot = goodInfo.is_hot === 1
-        this.ruleForm.is_on_sale = goodInfo.is_on_sale === 1
-        this.ruleForm.is_alone_sale = goodInfo.is_alone_sale === 1
-        this.ruleForm.goods_img = goodInfo.goods_img.split(',')
-        this.ruleForm.attr_check_list = []
-        this.colorPickers = []
-        this.getAttrs(goodInfo.goods_type)
+        thiz.ruleForm = goodInfo
+        thiz.ruleForm.return_type = goodInfo.goods_cause.split(',')
+        thiz.ruleForm.is_best = goodInfo.is_best === 1
+        thiz.ruleForm.is_new = goodInfo.is_new === 1
+        thiz.ruleForm.is_hot = goodInfo.is_hot === 1
+        thiz.ruleForm.is_on_sale = goodInfo.is_on_sale === 1
+        thiz.ruleForm.is_alone_sale = goodInfo.is_alone_sale === 1
+        thiz.ruleForm.goods_img = goodInfo.goods_img.split(',')
+        thiz.ruleForm.goods_img.forEach(function (item) {
+          let url = util.setImgUrl(item)
+          thiz.imgList.push({'name': '', 'url': url})
+        })
+        thiz.ruleForm.attr_check_list = []
+        thiz.colorPickers = []
+        thiz.getAttrs(goodInfo.goods_type)
       }
     },
     async getAttrs (event) {
@@ -479,26 +483,35 @@ export default{
     handleGoodsImgSuccess (res, file) {
       util.response(res, this)
       if (res.data) {
-        let url = '/' + res.data.path + '/' + res.data.name
+        let url = '/' + res.data.path + res.data.name
         this.ruleForm.goods_img.push(url)
       }
     },
     handleAttrImgSuccess (res, file) {
       util.response(res, this)
       if (res.data) {
-        let url = '/' + res.data.path + '/' + res.data.name
+        let url = '/' + res.data.path + res.data.name
         let idx = parseInt(res.data.attrIdx)
         this.attrImgSizeTabData[idx].img = url
+        this.attrImgColorTabData[idx].img = url
+      }
+    },
+    handleColorImgSuccess (res, file) {
+      util.response(res, this)
+      if (res.data) {
+        let url = '/' + res.data.path + res.data.name
+        let idx = parseInt(res.data.attrIdx)
+        this.attrImgColorTabData[idx].img = url
       }
     },
     beforeImgUpload (file) {
       const isLt2M = file.size / 1024 / 1024 < 2
       if (file.type !== 'image/jpeg' && file.type !== 'image/jpg' && file.type !== 'image/png') {
-        this.$message.error('上传头像图片只能是jpg/png/ipeg格式!')
+        this.$message.error('上传图片只能是jpg/png/ipeg格式!')
         return false
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
+        this.$message.error('上传图片大小不能超过 2MB!')
         return false
       }
       return true
@@ -544,7 +557,7 @@ export default{
         return
       }
       thiz.ruleForm.attr_color_list.push(value)
-      thiz.attrImgColorTabData.push({'attr_id': attrId, 'color': value, 'sort': 0})
+      thiz.attrImgColorTabData.push({'attr_id': attrId, 'color': value, 'sort': 0, 'img': ''})
       thiz.colorPickers.forEach(function (row, key) {
         if (key === idx) {
           row.value = value
