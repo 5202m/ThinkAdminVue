@@ -124,7 +124,7 @@
               <el-input v-model="row.size" size="medium" class="attr_img_input" />
               <span class="attr_img_sort">排序</span>
               <el-input v-model="row.sort" size="medium" class="attr_img_input" />
-              <el-upload class="upload-demo attr_img_upload" name="file" accept=".jpg,.png,.jpeg" :on-exceed="handleExceed" limit="1" :file-list="showImg(row.img)" :headers="header" :action="path" :data="{'type': 'goods_img', 'attrIdx': key}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleAttrImgSuccess">
+              <el-upload class="upload-demo attr_img_upload" name="file" accept=".jpg,.png,.jpeg" :on-exceed="handleExceed" :limit="1" :file-list="showImg(row.img)" :headers="header" :action="path" :data="{'type': 'goods_img', 'attrIdx': key}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleAttrImgSuccess">
                 <el-button size="small" type="primary">点击上传</el-button>
               </el-upload>
             </div>
@@ -135,7 +135,7 @@
               <el-input v-model="row.color" size="medium" class="attr_img_input" />
               <span class="attr_img_sort">排序</span>
               <el-input v-model="row.sort" size="medium" class="attr_img_input" />
-              <el-upload class="upload-demo attr_img_upload" name="file" accept=".jpg,.png,.jpeg" :on-exceed="handleExceed" limit="1" :file-list="showImg(row.img)" :headers="header" :action="path" :data="{'type': 'goods_img', 'attrIdx': key}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleColorImgSuccess">
+              <el-upload class="upload-demo attr_img_upload" name="file" accept=".jpg,.png,.jpeg" :on-exceed="handleExceed" :limit="1" :file-list="showImg(row.img)" :headers="header" :action="path" :data="{'type': 'goods_img', 'attrIdx': key}" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleColorImgSuccess">
                 <el-button size="small" type="primary">点击上传</el-button>
               </el-upload>
             </div>
