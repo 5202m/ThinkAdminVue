@@ -11,7 +11,12 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table vuethinkadmin.m_access_logs
+
+-- Dumping database structure for thinkadminvue
+CREATE DATABASE IF NOT EXISTS `thinkadminvue` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `thinkadminvue`;
+
+-- Dumping structure for table thinkadminvue.m_access_logs
 DROP TABLE IF EXISTS `m_access_logs`;
 CREATE TABLE IF NOT EXISTS `m_access_logs` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -23,9 +28,9 @@ CREATE TABLE IF NOT EXISTS `m_access_logs` (
   `isp` varchar(16) DEFAULT NULL,
   `create_at` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_access_logs: ~55 rows (approximately)
+-- Dumping data for table thinkadminvue.m_access_logs: ~106 rows (approximately)
 /*!40000 ALTER TABLE `m_access_logs` DISABLE KEYS */;
 INSERT INTO `m_access_logs` (`id`, `ip`, `area`, `country`, `region`, `city`, `isp`, `create_at`) VALUES
 	(1, '0.0.0.0', '', 'XX', 'XX', '内网IP', '内网IP', 1533539406),
@@ -82,10 +87,72 @@ INSERT INTO `m_access_logs` (`id`, `ip`, `area`, `country`, `region`, `city`, `i
 	(52, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1568858445),
 	(53, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1568858550),
 	(54, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1568863659),
-	(55, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1568879376);
+	(55, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1568879376),
+	(56, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1568975668),
+	(57, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1568977792),
+	(58, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569205575),
+	(59, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569206681),
+	(60, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569220381),
+	(61, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569220674),
+	(62, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569231296),
+	(63, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569232902),
+	(64, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569234155),
+	(65, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569234212),
+	(66, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569291558),
+	(67, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569305218),
+	(68, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569322842),
+	(69, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569392814),
+	(70, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569553897),
+	(71, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569554091),
+	(72, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569554618),
+	(73, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569565461),
+	(74, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569565649),
+	(75, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569569666),
+	(76, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569572435),
+	(77, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569573035),
+	(78, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569573409),
+	(79, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569575061),
+	(80, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569576291),
+	(81, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569739191),
+	(82, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569808673),
+	(83, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569809697),
+	(84, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569809730),
+	(85, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569810762),
+	(86, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569810872),
+	(87, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569811005),
+	(88, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569811172),
+	(89, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569811504),
+	(90, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1569811771),
+	(91, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1570584812),
+	(92, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1570584816),
+	(93, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1570670800),
+	(94, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1570689359),
+	(95, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1570701979),
+	(96, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1570758991),
+	(97, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1570773504),
+	(98, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1570783685),
+	(99, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1570844442),
+	(100, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1570859683),
+	(101, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571038516),
+	(102, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571038803),
+	(103, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571192047),
+	(104, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571192156),
+	(105, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571206112),
+	(106, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571283198),
+	(107, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571292680),
+	(108, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571302132),
+	(109, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571369146),
+	(110, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571379288),
+	(111, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571389918),
+	(112, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571622699),
+	(113, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571637806),
+	(114, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571727753),
+	(115, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571795155),
+	(116, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571810431),
+	(117, '127.0.0.1', NULL, '本机地址', '本机地址', '', '', 1571822607);
 /*!40000 ALTER TABLE `m_access_logs` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_admin_user
+-- Dumping structure for table thinkadminvue.m_admin_user
 DROP TABLE IF EXISTS `m_admin_user`;
 CREATE TABLE IF NOT EXISTS `m_admin_user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -103,17 +170,44 @@ CREATE TABLE IF NOT EXISTS `m_admin_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_admin_user: ~5 rows (approximately)
+-- Dumping data for table thinkadminvue.m_admin_user: ~5 rows (approximately)
 /*!40000 ALTER TABLE `m_admin_user` DISABLE KEYS */;
 INSERT INTO `m_admin_user` (`id`, `nickname`, `username`, `password`, `create_at`, `r_id`, `d_id`, `p_id`, `last_login_at`, `last_logout_at`, `avatar`, `status`) VALUES
-	(1, '管理员', 'admin', 'c7122a1349c22cb3c009da3613d242ab', NULL, NULL, NULL, NULL, 1568879376, 1568858542, '/uploads/20190918//39a62c298e5fd4a803796ba99de5d68f.jpg', 1),
+	(1, '管理员', 'admin', 'c7122a1349c22cb3c009da3613d242ab', NULL, NULL, NULL, NULL, 1571822607, 1571038625, '/uploads/20190920/465d0fa7de525c7b6d7d3749d41738a9.jpg', 1),
 	(2, '测试', 'dev', 'c9a973c677899e92518c823c31527716', NULL, 1, 5, 6, 1568701373, 1568702847, NULL, 1),
 	(3, 'test', 'test', 'f2e52e3efb6647bc3aceb89349568b88', NULL, 2, 6, 9, 1533549645, 1533549944, NULL, 1),
 	(4, '231', '321', '91f544db40265dbe9eb4a4580634ba55', NULL, 2, 5, 7, 0, NULL, NULL, 1),
 	(5, 'jade', 'jade', 'd3a03f001428755d35b80572bc67d7d2', NULL, 1, 1, 11, 1568771888, 1568776182, NULL, 1);
 /*!40000 ALTER TABLE `m_admin_user` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_category
+-- Dumping structure for table thinkadminvue.m_attribute
+DROP TABLE IF EXISTS `m_attribute`;
+CREATE TABLE IF NOT EXISTS `m_attribute` (
+  `attr_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cat_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属商品类型',
+  `attr_name` varchar(60) NOT NULL DEFAULT '' COMMENT '属性名称',
+  `attr_cat_type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '分类筛选样式，0普通，1颜色',
+  `attr_input_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '该属性值的录入方式，0手工录入，1从列表选择',
+  `attr_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '属性是否可选，0唯一属性，1单选属性，2复选属性',
+  `attr_values` text NOT NULL COMMENT '可选值列表',
+  `color_values` text,
+  `attr_index` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '能否进行检索，0不需要检索，1关键字检索，2范围检索',
+  `sort_order` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `is_linked` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '相同属性值的商品是否关联，0否，1是',
+  `attr_group` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `attr_input_category` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`attr_id`),
+  KEY `cat_id` (`cat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table thinkadminvue.m_attribute: ~0 rows (approximately)
+/*!40000 ALTER TABLE `m_attribute` DISABLE KEYS */;
+INSERT INTO `m_attribute` (`attr_id`, `cat_id`, `attr_name`, `attr_cat_type`, `attr_input_type`, `attr_type`, `attr_values`, `color_values`, `attr_index`, `sort_order`, `is_linked`, `attr_group`, `attr_input_category`) VALUES
+	(1, 1, '颜色', 1, 0, 0, '', NULL, 0, 0, 0, 0, NULL),
+	(2, 1, '尺码', 0, 1, 1, 'M\nX\nXL\n2XL\n3XL\n4XL', NULL, 0, 0, 0, 0, NULL);
+/*!40000 ALTER TABLE `m_attribute` ENABLE KEYS */;
+
+-- Dumping structure for table thinkadminvue.m_category
 DROP TABLE IF EXISTS `m_category`;
 CREATE TABLE IF NOT EXISTS `m_category` (
   `cat_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
@@ -145,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `m_category` (
   KEY `is_show` (`is_show`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_category: ~3 rows (approximately)
+-- Dumping data for table thinkadminvue.m_category: ~3 rows (approximately)
 /*!40000 ALTER TABLE `m_category` DISABLE KEYS */;
 INSERT INTO `m_category` (`cat_id`, `cat_name`, `keywords`, `cat_desc`, `parent_id`, `sort_order`, `template_file`, `measure_unit`, `show_in_nav`, `style`, `is_show`, `grade`, `filter_attr`, `is_top_style`, `top_style_tpl`, `style_icon`, `cat_icon`, `is_top_show`, `category_links`, `category_topic`, `pinyin_keyword`, `cat_alias_name`, `commission_rate`, `touch_icon`) VALUES
 	(1, '分类一', '分类一', '分类一', 0, 0, '', '', 0, ' ', 1, 0, '0', 0, ' ', 'other', ' ', 0, NULL, NULL, NULL, '分类一', 0, ' '),
@@ -153,7 +247,7 @@ INSERT INTO `m_category` (`cat_id`, `cat_name`, `keywords`, `cat_desc`, `parent_
 	(4, 'test', 'test', 'test', 1, 0, '', '', 0, ' ', 0, 0, '0', 0, ' ', 'other', ' ', 0, NULL, NULL, NULL, 'test', 0, '');
 /*!40000 ALTER TABLE `m_category` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_department
+-- Dumping structure for table thinkadminvue.m_department
 DROP TABLE IF EXISTS `m_department`;
 CREATE TABLE IF NOT EXISTS `m_department` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -163,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `m_department` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='部门表';
 
--- Dumping data for table vuethinkadmin.m_department: ~8 rows (approximately)
+-- Dumping data for table thinkadminvue.m_department: ~8 rows (approximately)
 /*!40000 ALTER TABLE `m_department` DISABLE KEYS */;
 INSERT INTO `m_department` (`id`, `name`, `remark`, `status`) VALUES
 	(1, '总经办1', '321', 1),
@@ -176,7 +270,7 @@ INSERT INTO `m_department` (`id`, `name`, `remark`, `status`) VALUES
 	(8, '321', '11', 1);
 /*!40000 ALTER TABLE `m_department` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_files
+-- Dumping structure for table thinkadminvue.m_files
 DROP TABLE IF EXISTS `m_files`;
 CREATE TABLE IF NOT EXISTS `m_files` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -188,19 +282,27 @@ CREATE TABLE IF NOT EXISTS `m_files` (
   `type` varchar(16) DEFAULT NULL,
   `create_at` int(10) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_files: ~5 rows (approximately)
+-- Dumping data for table thinkadminvue.m_files: ~13 rows (approximately)
 /*!40000 ALTER TABLE `m_files` DISABLE KEYS */;
 INSERT INTO `m_files` (`id`, `name`, `hash`, `path`, `u_id`, `ext`, `type`, `create_at`) VALUES
-	(1, '39a62c298e5fd4a803796ba99de5d68f.jpg', 'd19f0ca99147f66a2b77257fa5cc8e94ccc67d90', 'uploads/20190918/', 1, 'jpg', 'avatar', 1568800592),
-	(2, 'e2c8c2b29c8eb94e1814d6564e06ea92.jpg', 'aaa73e7a721d03852a1fa3bbf0920281bc1d00dc', 'uploads/20190918/', 1, 'jpg', 'avatar', 1568800836),
-	(3, '3581b2778cc9724b58fa375fb476b427.jpg', '048652e0b8d83e050f316093b329e0ea2356b488', 'uploads/20190918/', 1, 'jpg', 'avatar', 1568800975),
-	(4, 'df45a0b252c07439a5a07f030f86d8bb.png', '66343b209de8217e96401056e06b085f00086191', 'uploads/20190918/', 1, 'png', 'avatar', 1568804696),
-	(5, '964da693c8dbb57499f1a77e47017b97.png', '2b11eb8fe5413d6d809fc99a1cdc167d57c4187f', 'uploads/20190918/', 1, 'png', 'touch_icon', 1568805255);
+	(1, '465d0fa7de525c7b6d7d3749d41738a9.jpg', 'd19f0ca99147f66a2b77257fa5cc8e94ccc67d90', 'uploads/20190920/', 1, 'jpg', 'avatar', 1568977549),
+	(2, 'e11d704589588b542a57e399ec8d02f2.jpg', 'aaa73e7a721d03852a1fa3bbf0920281bc1d00dc', 'uploads/20190920/', 1, 'jpg', 'avatar', 1568977840),
+	(3, '5b924cc8a5a0a7dc00dc180745eedaa3.jpg', '1b35561979aa4d4010c6a32dbc8049038124e524', 'uploads/20191016/', 1, 'jpg', 'goods_img', 1571206319),
+	(4, '689c5d1789ca725f1d7afbadc3923c9b.png', '7563449b0700198139dd0eadcd109cb625c321a5', 'uploads/20191016/', 1, 'png', 'goods_img', 1571206404),
+	(5, 'fd33a0ecf8901cb070a035f7dfcd22be.png', '71d7fa6f90b26e07ff5b04a9f16c998b1a75c6be', 'uploads/20191016/', 1, 'png', 'goods_img', 1571206411),
+	(6, 'b09da61fc7174d17011d95875554f9a2.jpg', '7b2d7ec9198935720ba3dbf0e9036b95f59e235e', 'uploads/20191016/', 1, 'jpg', 'goods_img', 1571208402),
+	(7, 'a05edc2eb917172fb8d67b13f4f1eb10.jpg', 'fdaa275e7c8f18bc46c1c133a0b453eece8e863f', 'uploads/20191016/', 1, 'jpg', 'goods_img', 1571208433),
+	(8, '4385033968c7b110c0fa9de856d9f5a4.jpg', 'adf6aab2057bc775b1a321ba02e7804a86086251', 'uploads/20191016/', 1, 'jpg', 'goods_img', 1571208451),
+	(9, '259e1b600da764dbdd10538233422f72.jpg', '24adeafbe695a225f529eae378dab27063b50a0a', 'uploads/20191016/', 1, 'jpg', 'goods_img', 1571208598),
+	(10, '0e557695c9a0c421413d3aa1b9642efb.png', 'b4cd7484021279a5b61991da69ca5dbb873bac29', 'uploads/20191016/', 1, 'png', 'goods_img', 1571209075),
+	(11, 'ec87baa7c73bb627e75e549fe7f4f48c.jpg', 'c1050a5dff8878964c6ee09793184d00339560ad', 'uploads/20191017/', 1, 'jpg', 'goods_img', 1571283858),
+	(12, '946a826d1a05c5044ac23de39a4c1b80.jpg', '6b6a78c3b9b04566a8ea2459e1f57e51d6672704', 'uploads/20191023/', 1, 'jpg', 'goods_img', 1571814863),
+	(13, '6f8f988d3d8d73f1b4bd83968b1ad1e3.jpg', '693cbe81b4b47ab109df912e57baf3523a39713c', 'uploads/20191023/', 1, 'jpg', 'goods_img', 1571814872);
 /*!40000 ALTER TABLE `m_files` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods
+-- Dumping structure for table thinkadminvue.m_goods
 DROP TABLE IF EXISTS `m_goods`;
 CREATE TABLE IF NOT EXISTS `m_goods` (
   `goods_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -216,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `m_goods` (
   `provider_name` varchar(100) NOT NULL DEFAULT '',
   `goods_number` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '商品库存',
   `goods_weight` decimal(10,3) unsigned NOT NULL DEFAULT '0.000' COMMENT '商品重量',
-  `default_shipping` int(11) unsigned NOT NULL,
+  `default_shipping` int(11) unsigned NOT NULL DEFAULT '0',
   `market_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '市场价',
   `cost_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '成本价',
   `shop_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '本店售价',
@@ -226,8 +328,8 @@ CREATE TABLE IF NOT EXISTS `m_goods` (
   `warn_number` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '库存预警值',
   `keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '商品关键词',
   `goods_brief` varchar(255) NOT NULL DEFAULT '' COMMENT '商品简单描述',
-  `goods_desc` text NOT NULL COMMENT '电脑端商品详细描述',
-  `desc_mobile` text NOT NULL COMMENT '手机端商品详细描述',
+  `goods_desc` text COMMENT '电脑端商品详细描述',
+  `desc_mobile` text COMMENT '手机端商品详细描述',
   `goods_thumb` varchar(255) NOT NULL DEFAULT '',
   `goods_img` varchar(255) NOT NULL DEFAULT '',
   `original_img` varchar(255) NOT NULL DEFAULT '',
@@ -249,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `m_goods` (
   `bonus_type_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `last_update` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_type` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '属性类型',
-  `seller_note` varchar(255) NOT NULL DEFAULT '' COMMENT '商家备注',
+  `seller_note` varchar(255) DEFAULT NULL COMMENT '商家备注',
   `give_integral` int(11) NOT NULL DEFAULT '-1' COMMENT '赠送消费积分数',
   `rank_integral` int(11) NOT NULL DEFAULT '-1' COMMENT '赠送等级积分数',
   `suppliers_id` smallint(5) unsigned DEFAULT NULL,
@@ -263,8 +365,8 @@ CREATE TABLE IF NOT EXISTS `m_goods` (
   `xiangou_end_date` int(11) NOT NULL DEFAULT '0' COMMENT '限购结束时间',
   `xiangou_num` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '限购设定数量',
   `review_status` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  `review_content` varchar(255) NOT NULL,
-  `goods_shipai` text NOT NULL,
+  `review_content` varchar(255) DEFAULT NULL,
+  `goods_shipai` text,
   `comments_number` int(10) unsigned NOT NULL DEFAULT '0',
   `sales_volume` int(10) unsigned NOT NULL DEFAULT '0',
   `comment_num` int(10) unsigned NOT NULL DEFAULT '0',
@@ -275,13 +377,13 @@ CREATE TABLE IF NOT EXISTS `m_goods` (
   `pinyin_keyword` text COMMENT '关键字拼音',
   `goods_product_tag` varchar(2000) DEFAULT NULL COMMENT '评论标签',
   `goods_tag` varchar(255) DEFAULT NULL COMMENT '服务承诺标签',
-  `stages` varchar(512) NOT NULL DEFAULT '',
+  `stages` varchar(512) DEFAULT NULL,
   `stages_rate` decimal(10,2) NOT NULL DEFAULT '0.50',
   `freight` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '商品运费',
   `shipping_fee` decimal(10,2) NOT NULL DEFAULT '0.00',
   `tid` int(10) unsigned NOT NULL DEFAULT '0',
   `dis_commission` decimal(10,0) DEFAULT NULL COMMENT '分销佣金百分比',
-  `is_distribution` int(1) NOT NULL COMMENT '商品是否参与分销',
+  `is_distribution` int(1) NOT NULL DEFAULT '0' COMMENT '商品是否参与分销',
   `goods_unit` varchar(15) NOT NULL DEFAULT '个' COMMENT '商品单位',
   `goods_cause` varchar(10) NOT NULL,
   PRIMARY KEY (`goods_id`),
@@ -304,13 +406,15 @@ CREATE TABLE IF NOT EXISTS `m_goods` (
   KEY `user_cat` (`user_cat`),
   KEY `freight` (`freight`),
   KEY `tid` (`tid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods: ~1 rows (approximately)
 /*!40000 ALTER TABLE `m_goods` DISABLE KEYS */;
+INSERT INTO `m_goods` (`goods_id`, `cat_id`, `user_cat`, `user_id`, `goods_sn`, `bar_code`, `goods_name`, `goods_name_style`, `click_count`, `brand_id`, `provider_name`, `goods_number`, `goods_weight`, `default_shipping`, `market_price`, `cost_price`, `shop_price`, `promote_price`, `promote_start_date`, `promote_end_date`, `warn_number`, `keywords`, `goods_brief`, `goods_desc`, `desc_mobile`, `goods_thumb`, `goods_img`, `original_img`, `is_real`, `extension_code`, `is_on_sale`, `is_alone_sale`, `is_shipping`, `integral`, `add_time`, `sort_order`, `is_delete`, `is_best`, `is_new`, `is_hot`, `is_promote`, `is_volume`, `is_fullcut`, `bonus_type_id`, `last_update`, `goods_type`, `seller_note`, `give_integral`, `rank_integral`, `suppliers_id`, `is_check`, `store_hot`, `store_new`, `store_best`, `group_number`, `is_xiangou`, `xiangou_start_date`, `xiangou_end_date`, `xiangou_num`, `review_status`, `review_content`, `goods_shipai`, `comments_number`, `sales_volume`, `comment_num`, `model_price`, `model_inventory`, `model_attr`, `largest_amount`, `pinyin_keyword`, `goods_product_tag`, `goods_tag`, `stages`, `stages_rate`, `freight`, `shipping_fee`, `tid`, `dis_commission`, `is_distribution`, `goods_unit`, `goods_cause`) VALUES
+	(1, 1, 0, 0, 'G000001', '', '测试商品', '+', 0, 0, '', 100, 0.000, 0, 15.00, 8.00, 10.00, 0.00, 0, 0, 10, '', '测试商品', '测试商品', NULL, '/uploads/20191017//ec87baa7c73bb627e75e549fe7f4f48c.jpg', '/uploads/20191017//ec87baa7c73bb627e75e549fe7f4f48c.jpg', '/uploads/20191017//ec87baa7c73bb627e75e549fe7f4f48c.jpg', 1, '', 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, NULL, -1, -1, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, NULL, NULL, 0, 0, 0, 0, 0, 0, 0.00, NULL, NULL, NULL, NULL, 0.50, 0, 0.00, 0, NULL, 0, '个', '1,2');
 /*!40000 ALTER TABLE `m_goods` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_activity
+-- Dumping structure for table thinkadminvue.m_goods_activity
 DROP TABLE IF EXISTS `m_goods_activity`;
 CREATE TABLE IF NOT EXISTS `m_goods_activity` (
   `act_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -339,11 +443,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_activity` (
   KEY `review_status` (`review_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_activity: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_activity: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_activity` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_activity` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_article
+-- Dumping structure for table thinkadminvue.m_goods_article
 DROP TABLE IF EXISTS `m_goods_article`;
 CREATE TABLE IF NOT EXISTS `m_goods_article` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -354,23 +458,23 @@ CREATE TABLE IF NOT EXISTS `m_goods_article` (
   KEY `goods_id` (`goods_id`,`article_id`,`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_article: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_article: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_article` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_article` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_attr
+-- Dumping structure for table thinkadminvue.m_goods_attr
 DROP TABLE IF EXISTS `m_goods_attr`;
 CREATE TABLE IF NOT EXISTS `m_goods_attr` (
   `goods_attr_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `attr_id` int(10) unsigned NOT NULL DEFAULT '0',
   `attr_value` text NOT NULL,
-  `color_value` text NOT NULL,
+  `color_value` text,
   `attr_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `attr_sort` int(10) unsigned NOT NULL,
-  `attr_img_flie` varchar(255) NOT NULL,
-  `attr_gallery_flie` varchar(255) NOT NULL,
-  `attr_img_site` varchar(255) NOT NULL,
+  `attr_img_file` varchar(255) NOT NULL DEFAULT ' ' COMMENT '属性图片',
+  `attr_gallery_file` varchar(255) NOT NULL DEFAULT ' ' COMMENT '相册图片',
+  `attr_img_site` varchar(255) NOT NULL DEFAULT ' ',
   `attr_checked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `attr_value1` text,
   `lang_flag` int(2) DEFAULT '0',
@@ -383,13 +487,18 @@ CREATE TABLE IF NOT EXISTS `m_goods_attr` (
   KEY `goods_id` (`goods_id`),
   KEY `attr_id` (`attr_id`),
   KEY `admin_id` (`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_attr: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_attr: ~4 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_attr` DISABLE KEYS */;
+INSERT INTO `m_goods_attr` (`goods_attr_id`, `goods_id`, `attr_id`, `attr_value`, `color_value`, `attr_price`, `attr_sort`, `attr_img_file`, `attr_gallery_file`, `attr_img_site`, `attr_checked`, `attr_value1`, `lang_flag`, `attr_img`, `attr_thumb`, `img_flag`, `attr_pid`, `admin_id`) VALUES
+	(1, 1, 2, 'M', NULL, 0.00, 1, '/uploads/20191016//b09da61fc7174d17011d95875554f9a2.jpg', ' ', ' ', 0, NULL, 0, NULL, NULL, 0, NULL, 1),
+	(2, 1, 2, 'X', NULL, 0.00, 2, '/uploads/20191016//259e1b600da764dbdd10538233422f72.jpg', ' ', ' ', 0, NULL, 0, NULL, NULL, 0, NULL, 1),
+	(3, 1, 1, '#D9D2E9', NULL, 0.00, 3, ' ', ' ', ' ', 0, NULL, 0, NULL, NULL, 0, NULL, 1),
+	(4, 1, 1, '#CFE2F3', NULL, 0.00, 4, ' ', ' ', ' ', 0, NULL, 0, NULL, NULL, 0, NULL, 1);
 /*!40000 ALTER TABLE `m_goods_attr` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_cat
+-- Dumping structure for table thinkadminvue.m_goods_cat
 DROP TABLE IF EXISTS `m_goods_cat`;
 CREATE TABLE IF NOT EXISTS `m_goods_cat` (
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -399,11 +508,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_cat` (
   KEY `cat_id` (`cat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_cat: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_cat: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_cat` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_cat` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_change_log
+-- Dumping structure for table thinkadminvue.m_goods_change_log
 DROP TABLE IF EXISTS `m_goods_change_log`;
 CREATE TABLE IF NOT EXISTS `m_goods_change_log` (
   `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增日志ID',
@@ -423,11 +532,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_change_log` (
   PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_change_log: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_change_log: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_change_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_change_log` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_conshipping
+-- Dumping structure for table thinkadminvue.m_goods_conshipping
 DROP TABLE IF EXISTS `m_goods_conshipping`;
 CREATE TABLE IF NOT EXISTS `m_goods_conshipping` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -438,11 +547,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_conshipping` (
   KEY `goods_id` (`goods_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_conshipping: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_conshipping: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_conshipping` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_conshipping` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_consumption
+-- Dumping structure for table thinkadminvue.m_goods_consumption
 DROP TABLE IF EXISTS `m_goods_consumption`;
 CREATE TABLE IF NOT EXISTS `m_goods_consumption` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -453,11 +562,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_consumption` (
   KEY `goods_id` (`goods_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_consumption: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_consumption: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_consumption` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_consumption` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_extend
+-- Dumping structure for table thinkadminvue.m_goods_extend
 DROP TABLE IF EXISTS `m_goods_extend`;
 CREATE TABLE IF NOT EXISTS `m_goods_extend` (
   `extend_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -483,11 +592,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_extend` (
   PRIMARY KEY (`extend_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_extend: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_extend: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_extend` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_extend` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_gallery
+-- Dumping structure for table thinkadminvue.m_goods_gallery
 DROP TABLE IF EXISTS `m_goods_gallery`;
 CREATE TABLE IF NOT EXISTS `m_goods_gallery` (
   `img_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -504,11 +613,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_gallery` (
   KEY `goods_id` (`goods_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_gallery: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_gallery: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_gallery` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_gallery` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_inventory_logs
+-- Dumping structure for table thinkadminvue.m_goods_inventory_logs
 DROP TABLE IF EXISTS `m_goods_inventory_logs`;
 CREATE TABLE IF NOT EXISTS `m_goods_inventory_logs` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -529,11 +638,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_inventory_logs` (
   KEY `admin_id` (`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_inventory_logs: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_inventory_logs: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_inventory_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_inventory_logs` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_report
+-- Dumping structure for table thinkadminvue.m_goods_report
 DROP TABLE IF EXISTS `m_goods_report`;
 CREATE TABLE IF NOT EXISTS `m_goods_report` (
   `report_id` int(10) NOT NULL AUTO_INCREMENT,
@@ -554,11 +663,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_report` (
   PRIMARY KEY (`report_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_report: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_report: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_report` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_report` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_report_img
+-- Dumping structure for table thinkadminvue.m_goods_report_img
 DROP TABLE IF EXISTS `m_goods_report_img`;
 CREATE TABLE IF NOT EXISTS `m_goods_report_img` (
   `img_id` int(10) NOT NULL AUTO_INCREMENT,
@@ -569,11 +678,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_report_img` (
   PRIMARY KEY (`img_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_report_img: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_report_img: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_report_img` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_report_img` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_report_title
+-- Dumping structure for table thinkadminvue.m_goods_report_title
 DROP TABLE IF EXISTS `m_goods_report_title`;
 CREATE TABLE IF NOT EXISTS `m_goods_report_title` (
   `title_id` int(10) NOT NULL AUTO_INCREMENT,
@@ -582,11 +691,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_report_title` (
   PRIMARY KEY (`title_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_report_title: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_report_title: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_report_title` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_report_title` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_report_type
+-- Dumping structure for table thinkadminvue.m_goods_report_type
 DROP TABLE IF EXISTS `m_goods_report_type`;
 CREATE TABLE IF NOT EXISTS `m_goods_report_type` (
   `type_id` int(10) NOT NULL AUTO_INCREMENT,
@@ -595,11 +704,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_report_type` (
   PRIMARY KEY (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_report_type: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_report_type: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_report_type` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_report_type` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_transport
+-- Dumping structure for table thinkadminvue.m_goods_transport
 DROP TABLE IF EXISTS `m_goods_transport`;
 CREATE TABLE IF NOT EXISTS `m_goods_transport` (
   `tid` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
@@ -612,11 +721,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_transport` (
   KEY `ru_id` (`ru_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_transport: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_transport: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_transport` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_transport` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_transport_express
+-- Dumping structure for table thinkadminvue.m_goods_transport_express
 DROP TABLE IF EXISTS `m_goods_transport_express`;
 CREATE TABLE IF NOT EXISTS `m_goods_transport_express` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -630,11 +739,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_transport_express` (
   KEY `ru_id` (`ru_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_transport_express: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_transport_express: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_transport_express` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_transport_express` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_transport_extend
+-- Dumping structure for table thinkadminvue.m_goods_transport_extend
 DROP TABLE IF EXISTS `m_goods_transport_extend`;
 CREATE TABLE IF NOT EXISTS `m_goods_transport_extend` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -649,11 +758,11 @@ CREATE TABLE IF NOT EXISTS `m_goods_transport_extend` (
   KEY `ru_id` (`ru_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_transport_extend: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_transport_extend: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_transport_extend` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_transport_extend` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_transport_tpl
+-- Dumping structure for table thinkadminvue.m_goods_transport_tpl
 DROP TABLE IF EXISTS `m_goods_transport_tpl`;
 CREATE TABLE IF NOT EXISTS `m_goods_transport_tpl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -665,27 +774,30 @@ CREATE TABLE IF NOT EXISTS `m_goods_transport_tpl` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_transport_tpl: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_transport_tpl: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_transport_tpl` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_goods_transport_tpl` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_goods_type
+-- Dumping structure for table thinkadminvue.m_goods_type
 DROP TABLE IF EXISTS `m_goods_type`;
 CREATE TABLE IF NOT EXISTS `m_goods_type` (
   `cat_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL DEFAULT '0',
   `cat_name` varchar(60) NOT NULL DEFAULT '',
   `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `attr_group` varchar(255) NOT NULL,
   PRIMARY KEY (`cat_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_goods_type: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_goods_type: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_goods_type` DISABLE KEYS */;
+INSERT INTO `m_goods_type` (`cat_id`, `user_id`, `cat_name`, `enabled`, `attr_group`) VALUES
+	(1, 0, '服装', 1, ' '),
+	(2, 0, '鞋子', 1, '');
 /*!40000 ALTER TABLE `m_goods_type` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_group_goods
+-- Dumping structure for table thinkadminvue.m_group_goods
 DROP TABLE IF EXISTS `m_group_goods`;
 CREATE TABLE IF NOT EXISTS `m_group_goods` (
   `id` smallint(8) NOT NULL AUTO_INCREMENT,
@@ -700,11 +812,11 @@ CREATE TABLE IF NOT EXISTS `m_group_goods` (
   KEY `admin_id` (`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table vuethinkadmin.m_group_goods: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_group_goods: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_group_goods` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_group_goods` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_menu
+-- Dumping structure for table thinkadminvue.m_menu
 DROP TABLE IF EXISTS `m_menu`;
 CREATE TABLE IF NOT EXISTS `m_menu` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -720,9 +832,9 @@ CREATE TABLE IF NOT EXISTS `m_menu` (
   `status` tinyint(1) DEFAULT '1' COMMENT '是否启用',
   `op` varchar(64) DEFAULT NULL COMMENT '后台判断权限',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='菜单';
 
--- Dumping data for table vuethinkadmin.m_menu: ~20 rows (approximately)
+-- Dumping data for table thinkadminvue.m_menu: ~28 rows (approximately)
 /*!40000 ALTER TABLE `m_menu` DISABLE KEYS */;
 INSERT INTO `m_menu` (`id`, `pid`, `name`, `title`, `icon`, `component`, `path`, `redirect`, `hidden`, `sort`, `status`, `op`) VALUES
 	(2, 0, 'system', '系统管理', 'el-icon-setting', 'home', '/system', '', 0, 1, 1, NULL),
@@ -744,10 +856,19 @@ INSERT INTO `m_menu` (`id`, `pid`, `name`, `title`, `icon`, `component`, `path`,
 	(18, 0, 'shop', '商城管理', 'el-icon-s-goods', 'category', '/shop', '', 0, 2, 1, NULL),
 	(19, 18, 'category', '商品分类管理', '', 'category', 'category/index', '', 0, 0, 1, NULL),
 	(20, 18, 'add', '商品分类增加', '', 'category', 'category/add', '', 1, 0, 1, NULL),
-	(21, 18, 'edit', '商品分类编辑', '', 'category', 'category/edit', '', 1, 0, 1, NULL);
+	(21, 18, 'edit', '商品分类编辑', '', 'category', 'category/edit', '', 1, 0, 1, NULL),
+	(22, 18, 'good', '商品管理', '', 'good', 'good/index', '', 0, 0, 1, NULL),
+	(23, 18, 'goodAdd', '商品添加', '', 'goodAdd', 'good/add', '', 1, 0, 1, NULL),
+	(24, 18, 'goodType', '商品类型管理', '', 'goodType', 'type/index', '', 0, 0, 1, NULL),
+	(25, 18, 'typeAdd', '商品类型增加', '', 'goodType', 'type/add', '', 1, 0, 1, NULL),
+	(26, 18, 'typeEdit', '商品类型编辑', '', 'goodType', 'type/edit', '', 1, 0, 1, NULL),
+	(27, 18, 'goodEdit', '商品编辑', '', 'goodAdd', 'good/add', '', 1, 0, 1, NULL),
+	(28, 18, 'attribute', '商品类型属性管理', '', 'attribute', 'attr/index', '', 0, 0, 1, NULL),
+	(29, 18, 'attrAdd', '商品类型属性添加', '', 'attrEdit', 'attr/edit', '', 1, 0, 1, NULL),
+	(30, 18, 'attrEdit', '商品类型属性编辑', '', 'attrEdit', 'attr/edit', '', 1, 0, 1, NULL);
 /*!40000 ALTER TABLE `m_menu` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_position
+-- Dumping structure for table thinkadminvue.m_position
 DROP TABLE IF EXISTS `m_position`;
 CREATE TABLE IF NOT EXISTS `m_position` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -755,9 +876,9 @@ CREATE TABLE IF NOT EXISTS `m_position` (
   `remark` varchar(200) DEFAULT NULL COMMENT '岗位备注',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态1启用,0禁用',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='岗位表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='岗位表';
 
--- Dumping data for table vuethinkadmin.m_position: ~11 rows (approximately)
+-- Dumping data for table thinkadminvue.m_position: ~11 rows (approximately)
 /*!40000 ALTER TABLE `m_position` DISABLE KEYS */;
 INSERT INTO `m_position` (`id`, `name`, `remark`, `status`) VALUES
 	(1, '后端开发工程师', '1122223111', 1),
@@ -773,7 +894,35 @@ INSERT INTO `m_position` (`id`, `name`, `remark`, `status`) VALUES
 	(11, 'CEO', NULL, 1);
 /*!40000 ALTER TABLE `m_position` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_rule
+-- Dumping structure for table thinkadminvue.m_products
+DROP TABLE IF EXISTS `m_products`;
+CREATE TABLE IF NOT EXISTS `m_products` (
+  `product_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '商品ID',
+  `goods_attr` varchar(50) DEFAULT NULL COMMENT 'goods_attr表中goods_attr_id值，多个用|隔开',
+  `product_sn` varchar(60) DEFAULT NULL COMMENT '商品货号',
+  `bar_code` varchar(60) NOT NULL COMMENT '商品条形码',
+  `product_number` smallint(5) unsigned DEFAULT '0' COMMENT '商品库存',
+  `product_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '本店价格',
+  `product_market_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '市场价格',
+  `product_warn_number` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '预警值',
+  `admin_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_id`),
+  KEY `goods_id` (`goods_id`),
+  KEY `product_sn` (`product_sn`),
+  KEY `admin_id` (`admin_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='商品属性规格';
+
+-- Dumping data for table thinkadminvue.m_products: ~4 rows (approximately)
+/*!40000 ALTER TABLE `m_products` DISABLE KEYS */;
+INSERT INTO `m_products` (`product_id`, `goods_id`, `goods_attr`, `product_sn`, `bar_code`, `product_number`, `product_price`, `product_market_price`, `product_warn_number`, `admin_id`) VALUES
+	(1, 1, '1|3', 'G000001_p1', '', 100, 10.00, 0.00, 10, 1),
+	(2, 1, '1|4', 'G000001_p3', '', 100, 10.00, 0.00, 10, 1),
+	(3, 1, '2|3', 'G000001_p4', '', 100, 10.00, 0.00, 10, 1),
+	(4, 1, '2|4', 'G000001_p2', '', 100, 10.00, 0.00, 10, 1);
+/*!40000 ALTER TABLE `m_products` ENABLE KEYS */;
+
+-- Dumping structure for table thinkadminvue.m_rule
 DROP TABLE IF EXISTS `m_rule`;
 CREATE TABLE IF NOT EXISTS `m_rule` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -784,14 +933,14 @@ CREATE TABLE IF NOT EXISTS `m_rule` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='权限组';
 
--- Dumping data for table vuethinkadmin.m_rule: ~2 rows (approximately)
+-- Dumping data for table thinkadminvue.m_rule: ~2 rows (approximately)
 /*!40000 ALTER TABLE `m_rule` DISABLE KEYS */;
 INSERT INTO `m_rule` (`id`, `name`, `rs`, `remark`, `status`) VALUES
 	(1, '测试1', '1,5,4,10,2,11,12,13,6,7,8,9,3,14,15,16', '测试1', 1),
 	(2, '测试2', '1,5,2,11,12,13,6,7,8,9', '', 1);
 /*!40000 ALTER TABLE `m_rule` ENABLE KEYS */;
 
--- Dumping structure for table vuethinkadmin.m_sys_config
+-- Dumping structure for table thinkadminvue.m_sys_config
 DROP TABLE IF EXISTS `m_sys_config`;
 CREATE TABLE IF NOT EXISTS `m_sys_config` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -802,7 +951,7 @@ CREATE TABLE IF NOT EXISTS `m_sys_config` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置';
 
--- Dumping data for table vuethinkadmin.m_sys_config: ~0 rows (approximately)
+-- Dumping data for table thinkadminvue.m_sys_config: ~0 rows (approximately)
 /*!40000 ALTER TABLE `m_sys_config` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_sys_config` ENABLE KEYS */;
 
