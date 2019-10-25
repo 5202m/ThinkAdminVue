@@ -28,6 +28,30 @@ class AccessLog extends Migrator
      */
     public function change()
     {
+        $table = $this->table('m_access_log', ['engine'=>'InnoDB']);
+        $table->addColumn('ip', 'string', ['limit'=>32,'default'=>'','comment'=>'ip地址'])
+            ->addColumn('area', 'string', ['limit'=>32])
+            ->addColumn('country', 'string', ['limit'=>32])
+            ->addColumn('region', 'string', ['limit'=>32])
+            ->addColumn('city', 'string', ['limit'=>32])
+            ->addColumn('isp', 'string', ['limit'=>16])
+            ->addColumn('create_at', 'integer', ['limit'=>10])
+            ->create();
+    }
+
+    /**
+     * Migrate Up.
+     */
+    public function up()
+    {
+
+    }
+
+    /**
+     * Migrate Down.
+     */
+    public function down()
+    {
 
     }
 }
