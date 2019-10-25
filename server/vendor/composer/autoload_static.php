@@ -6,18 +6,31 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit90ddf3e6c776a9858f2d5174d4078607
 {
+    public static $files = array (
+        'ddc3cd2a04224f9638c5d0de6a69c7e3' => __DIR__ . '/..' . '/topthink/think-migration/src/config.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         't' => 
         array (
+            'think\\migration\\' => 16,
             'think\\composer\\' => 15,
         ),
         'a' => 
         array (
             'app\\' => 4,
         ),
+        'P' => 
+        array (
+            'Phinx\\' => 6,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'think\\migration\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-migration/src',
+        ),
         'think\\composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-installer/src',
@@ -25,6 +38,10 @@ class ComposerStaticInit90ddf3e6c776a9858f2d5174d4078607
         'app\\' => 
         array (
             0 => __DIR__ . '/../..' . '/application',
+        ),
+        'Phinx\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-migration/phinx/src/Phinx',
         ),
     );
 
