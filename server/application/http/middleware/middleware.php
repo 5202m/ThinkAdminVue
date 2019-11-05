@@ -6,6 +6,6 @@
  * Time: 16:18
  */
 return [
-    'auth' => app\http\middleware\Auth::class,
-    'checkRule' => app\http\middleware\CheckRule::class
+    'Auth' => app\http\middleware\Auth::class,
+    'CheckRule' => app\http\middleware\CheckRule::class
     ];

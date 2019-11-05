@@ -11,7 +11,8 @@ class GoodsType extends Controller//Comm
     protected $param;
 
     protected $middleware = [
-        'checkRule' => ['except'    => ['read', 'enable'] ]
+        'Auth',
+        'CheckRule' => ['except'    => ['read', 'enable'] ]
     ];
 
     public function initialize()

@@ -33,7 +33,7 @@ Route::resource('attr', 'admin/attribute')->middleware(['Auth', 'CheckRule']);
 //Route::post('base/login', 'admin/base/login');
 //Route::post('comm/logout', 'admin/comm/logout');
 
-Route::post('files/index', 'admin/files/index')->middleware(['Auth', 'CheckRule']);
+Route::post('files/index', 'admin/files/index')->middleware('Auth');
 
 Route::post('user/enable', 'admin/adminUser/enable')->middleware(['Auth', 'CheckRule']);
 Route::post('user/changePass', 'admin/adminUser/changePass')->middleware(['Auth', 'CheckRule']);

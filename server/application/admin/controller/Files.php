@@ -11,14 +11,17 @@ class Files extends Controller//Comm
 
     protected $param;
 
+    protected $user;
+
     protected $middleware = [
-        'checkRule' => ['except'    => ['index'] ]
+        'Auth'
     ];
 
     public function initialize()
     {
         //parent::initialize();
         $this->param = $this->request->param();
+        $this->user = $this->param['user'];
         $this->model = new \app\admin\model\Files();
     }
 

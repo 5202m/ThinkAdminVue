@@ -7,6 +7,7 @@ class CheckRule
     public function handle($request, \Closure $next)
     {
         $user = $request->param('user');
+        $request->check = 'checkRule';
         //print_r($user);die;
         //判断是否有操作权限
         $module = $request->module();

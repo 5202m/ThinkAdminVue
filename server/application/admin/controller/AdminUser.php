@@ -12,7 +12,8 @@ class AdminUser extends Controller//Comm
     protected $param;
 
     protected $middleware = [
-        'checkRule' => ['except'    => ['read', 'enable', 'setUserInfo', 'changePass'] ]
+        'Auth',
+        'CheckRule' => ['except'    => ['read', 'enable', 'setUserInfo', 'changePass'] ]
     ];
 
     public function initialize()

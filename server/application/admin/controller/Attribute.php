@@ -11,7 +11,8 @@ class Attribute extends Controller//Comm
     protected $param;
 
     protected $middleware = [
-        'checkRule' => ['except'    => ['read'] ]
+        'Auth',
+        'CheckRule' => ['except'    => ['read'] ]
     ];
 
     public function initialize()
