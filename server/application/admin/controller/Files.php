@@ -3,12 +3,22 @@
 namespace app\admin\controller;
 
 use think\App;
+use think\Controller;
 
-class Files extends Comm
+class Files extends Controller//Comm
 {
+    protected $model;
+
+    protected $param;
+
+    protected $middleware = [
+        'checkRule' => ['except'    => ['index'] ]
+    ];
+
     public function initialize()
     {
-        parent::initialize();
+        //parent::initialize();
+        $this->param = $this->request->param();
         $this->model = new \app\admin\model\Files();
     }
 

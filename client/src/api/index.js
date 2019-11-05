@@ -1,5 +1,4 @@
-import base from './base'
-import comm from './comm'
+import login from './login'
 import department from './department'
 import menu from './menu'
 import position from './position'
@@ -11,8 +10,7 @@ import goodType from './goodsType'
 import attribute from './attribute'
 
 export default {
-  base,
-  comm,
+  login,
   department,
   menu,
   position,

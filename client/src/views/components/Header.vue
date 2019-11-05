@@ -40,7 +40,7 @@
 </template>
 <script>
 // import SidebarList from '@/views/components/SidebarList'
-import comm from '@/api/comm'
+import login from '@/api/login'
 import user from '@/api/user'
 import util from '@/utils'
 export default {
@@ -81,7 +81,7 @@ export default {
     async handleCommand (command) {
       switch (command) {
         case 'logout':
-          let res = await comm.logout()
+          let res = await login.logout()
           util.response(res, this)
           if (res.code === 200) {
             util.message('您已退出')

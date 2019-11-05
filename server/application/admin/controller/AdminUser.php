@@ -2,20 +2,31 @@
 
 namespace app\admin\controller;
 
-class AdminUser extends Comm
+use think\Controller;
+
+class AdminUser extends Controller//Comm
 {
+
+    protected $model;
+
+    protected $param;
+
+    protected $middleware = [
+        'checkRule' => ['except'    => ['read', 'enable', 'setUserInfo', 'changePass'] ]
+    ];
 
     public function initialize()
     {
-        parent::initialize();
+        //parent::initialize();
+        $this->param = $this->request->param();
         $this->model = new \app\admin\model\AdminUser();
     }
 
     public function index()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $arr = [];
         if (isset($this->param['data'])) {
             $data = json_decode($this->param['data'], true);
@@ -46,9 +57,9 @@ class AdminUser extends Comm
 
     public function save()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         if (isset($this->param['password']) && $this->param['password'] != '') {
             $this->param['password'] = md5($this->param['password'].$this->param['username']);
         } else {
@@ -64,9 +75,9 @@ class AdminUser extends Comm
 
     public function update()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         if (isset($this->param['id'])) {
             $id = $this->param['id'];
             unset($this->param['id']);
@@ -88,9 +99,9 @@ class AdminUser extends Comm
 
     public function delete()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(401, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
         } else {

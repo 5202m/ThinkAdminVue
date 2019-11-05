@@ -1,31 +1,19 @@
 <?php
+
 namespace app\admin\controller;
 
-use app\admin\model\AccessLogs;
-use think\App;
-use think\Request;
 use think\Controller;
+use think\Request;
 
-class Base extends Controller
+class Login extends Controller
 {
-    private $param = [];
+    protected $param = [];
 
     public function initialize()
     {
         parent::initialize();
-        // header('Access-Control-Allow-Origin: '.$_SERVER['HTTP_ORIGIN']);
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Credentials: true');
-        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, sessionId, X-Requested-Token");
-        /*$this->request = $request;*/
         $this->param = $this->request->param();
     }
-
-    /*public function index()
-    {
-        //echo "你好";
-    }*/
 
     public function login()
     {
@@ -34,8 +22,8 @@ class Base extends Controller
         $user = new \app\admin\model\AdminUser();
         $menu = new \app\admin\model\Menu();
         $data = [
-          'username' => $username,
-          'password' => md5($password.$username)
+            'username' => $username,
+            'password' => md5($password.$username)
         ];
         $ret  = $user->getUserLogin($data);
         if ($ret) {
@@ -46,14 +34,14 @@ class Base extends Controller
             $result = json_decode(curl_get($url), true);
             if ($result) {
                 $res = [
-                'ip'        => $ip,
-                'country'   => $result[0],
-                'region'    => $result[1],
-                'city'      => $result[2],
-                'isp'       => $result[4],
-                'create_at' =>time(),
-              ];
-                $accessLogs = new AccessLogs();
+                    'ip'        => $ip,
+                    'country'   => $result[0],
+                    'region'    => $result[1],
+                    'city'      => $result[2],
+                    'isp'       => $result[4],
+                    'create_at' =>time(),
+                ];
+                $accessLogs = new \app\admin\model\AccessLogs();
                 $accessLogs->saveLogs($res);
             }
             // ---end
@@ -76,15 +64,30 @@ class Base extends Controller
             }
             cache($token, json_encode($ret), 3600);
             $data = [
-              'token' => $token,
-              'user'  => $ret,
-              'menus' => $m
+                'token' => $token,
+                'user'  => $ret,
+                'menus' => $m
             ];
             $d['last_login_at'] = time();
             $ret = $user->updateUser($ret['id'], $d, false);
             return msg(200, $data);
         } else {
             return msg(100, null, $user->getError());
+        }
+    }
+
+    public function logout()
+    {
+        $token = $this->request->header('x-requested-token');
+        if ($token) {
+            $user = json_decode(cache($token), true);
+            cache($token, null);
+            $d['last_logout_at'] = time();
+            $adminUser = new \app\admin\model\AdminUser();
+            $ret = $adminUser->updateUser($user['id'], $d, false);
+            return msg(200, null, '操作成功');
+        } else {
+            return msg(100, null, '操作失败');
         }
     }
 }

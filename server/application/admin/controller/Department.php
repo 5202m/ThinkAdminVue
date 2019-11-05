@@ -2,19 +2,30 @@
 
 namespace app\admin\controller;
 
-class Department extends Comm
+use think\Controller;
+
+class Department extends Controller//Comm
 {
+    protected $model;
+
+    protected $param;
+
+    protected $middleware = [
+        'checkRule' => ['except'    => ['read', 'enable'] ]
+    ];
+
     public function initialize()
     {
-        parent::initialize();
+        //parent::initialize();
+        $this->param = $this->request->param();
         $this->model = new \app\admin\model\Department();
     }
 
     public function index()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $status = isset($this->param['status']) ? $this->param['status'] : null;
         $data = [];
         if ($status) {
@@ -41,9 +52,9 @@ class Department extends Comm
 
     public function save()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $ret = $this->model->saveDepartment($this->param);
         if ($ret) {
             return msg(200, null, '添加成功');
@@ -54,9 +65,9 @@ class Department extends Comm
 
     public function update()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
             unset($this->param['id']);
@@ -73,9 +84,9 @@ class Department extends Comm
 
     public function delete()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(401, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
         } else {

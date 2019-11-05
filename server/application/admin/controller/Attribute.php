@@ -2,12 +2,22 @@
 
 namespace app\admin\controller;
 
+use think\Controller;
 
-class Attribute extends Comm
+class Attribute extends Controller//Comm
 {
+    protected $model;
+
+    protected $param;
+
+    protected $middleware = [
+        'checkRule' => ['except'    => ['read'] ]
+    ];
+
     public function initialize()
     {
-        parent::initialize();
+        //parent::initialize();
+        $this->param = $this->request->param();
         $this->model = new \app\admin\model\Attribute();
     }
     /**
@@ -17,9 +27,9 @@ class Attribute extends Comm
      */
     public function index()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $page = $this->param['currentPage'];
         $pageSize = $this->param['pageSize'];
         //$cat_id = $this->param['cat_id'];
@@ -41,9 +51,9 @@ class Attribute extends Comm
      */
     public function attrList()
     {
-        if(!$this->checkRule()){
+        /*if(!$this->checkRule()){
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $cat_id = $this->param['cat_id'];
         $where = ['cat_id'=>$cat_id];
         $ret = $this->model->getAttributeList($where);
@@ -71,9 +81,9 @@ class Attribute extends Comm
      */
     public function save()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $ret = $this->model->saveAttribute($this->param);
         if ($ret) {
             return msg(200, null, '添加成功');
@@ -116,9 +126,9 @@ class Attribute extends Comm
      */
     public function update()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
             unset($this->param['id']);
@@ -140,9 +150,9 @@ class Attribute extends Comm
      */
     public function delete()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(401, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
         } else {

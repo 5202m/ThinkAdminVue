@@ -1,17 +1,28 @@
 <?php
 namespace app\admin\controller;
 
+use think\Controller;
+
 /**
  * Class Menu
  * @package app\admin\controller
  *
  * @route('menu')
  */
-class Menu extends Comm
+class Menu extends Controller//Comm
 {
+    protected $model;
+
+    protected $param;
+
+    protected $middleware = [
+        'checkRule' => ['except'    => ['read', 'enable'] ]
+    ];
+
     public function initialize()
     {
-        parent::initialize();
+        //parent::initialize();
+        $this->param = $this->request->param();
         $this->model = new \app\admin\model\Menu();
     }
 
@@ -22,9 +33,9 @@ class Menu extends Comm
      */
     public function index()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $ret = $this->model->getMenus();
         $ret = getTree($ret);
         if ($ret) {
@@ -47,9 +58,9 @@ class Menu extends Comm
 
     public function save()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['hidden'] == 'true') {
             $this->param['hidden'] = 1;
         } else {
@@ -65,9 +76,9 @@ class Menu extends Comm
 
     public function update()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
             unset($this->param['id']);
@@ -89,9 +100,9 @@ class Menu extends Comm
 
     public function delete()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(401, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
         } else {

@@ -2,13 +2,23 @@
 
 namespace app\admin\controller;
 
+use think\Controller;
 
-class Category extends Comm
+class Category extends Controller//Comm
 {
+
+    protected $model;
+
+    protected $param;
+
+    protected $middleware = [
+        'checkRule' => ['except'    => ['read', 'enable'] ]
+    ];
 
     public function initialize()
     {
-        parent::initialize();
+        //parent::initialize();
+        $this->param = $this->request->param();
         $this->model = new \app\admin\model\Category();
     }
 
@@ -19,9 +29,9 @@ class Category extends Comm
      */
     public function index()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $ret = $this->model->getCategories();
         $ret = getTree($ret, ['id'=>'cat_id', 'title'=>'cat_name', 'pid'=>'parent_id']);
         if ($ret) {
@@ -48,9 +58,9 @@ class Category extends Comm
      */
     public function save()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['is_show'] == 'true') {
             $this->param['is_show'] = 1;
         } else {
@@ -103,9 +113,9 @@ class Category extends Comm
      */
     public function update()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
             unset($this->param['id']);
@@ -137,9 +147,9 @@ class Category extends Comm
      */
     public function delete()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(401, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
         } else {

@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import base from '@/api/base'
+import login from '@/api/login'
 import util from '@/utils'
 import http from '@/utils/http'
 export default{
@@ -79,7 +79,7 @@ export default{
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           this.loading = true
-          let res = await base.login(this.ruleForm)
+          let res = await login.login(this.ruleForm)
           await util.sleep(500)
           this.loading = false
           if (res.code === 200) {

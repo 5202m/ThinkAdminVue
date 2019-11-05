@@ -2,12 +2,22 @@
 
 namespace app\admin\controller;
 
+use think\Controller;
 
-class Goods extends Comm
+class Goods extends Controller//Comm
 {
+    protected $model;
+
+    protected $param;
+
+    protected $middleware = [
+        'checkRule' => ['except'    => ['read'] ]
+    ];
+
     public function initialize()
     {
-        parent::initialize();
+        //parent::initialize();
+        $this->param = $this->request->param();
         $this->model = new \app\admin\model\Goods();
     }
 
@@ -18,9 +28,9 @@ class Goods extends Comm
      */
     public function index()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $page = $this->param['currentPage'];
         $pageSize = $this->param['pageSize'];
         $ret = $this->model->getGoods([], $page, $pageSize);
@@ -48,9 +58,9 @@ class Goods extends Comm
      */
     public function save()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $this->param['admin_id'] = $this->user['id'];
         /*$goodsParam = $this->param;
         unset($goodsParam['attr_check_list'],$goodsParam['attr_color_list'],$goodsParam['attr_tab_data'],$goodsParam['attr_img_size_data'],$goodsParam['attr_color_data']);
@@ -117,9 +127,9 @@ class Goods extends Comm
      */
     public function update()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
             unset($this->param['id']);
@@ -140,9 +150,9 @@ class Goods extends Comm
      */
     public function enable()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
             unset($this->param['id']);

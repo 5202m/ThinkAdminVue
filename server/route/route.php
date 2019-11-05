@@ -15,37 +15,40 @@ Route::get('think', function () {
 
 Route::get('hello/:name', 'index/hello');
 
+Route::post('login/login', 'admin/Login/login');
+Route::post('login/logout', 'admin/Login/logout');
+
 //资源路由
-Route::resource('menu','admin/menu');
-Route::resource('position','admin/position');
-Route::resource('department','admin/department');
-Route::resource('user','admin/adminUser');
-Route::resource('rule','admin/rule');
-Route::resource('category','admin/category');
-Route::resource('good', 'admin/goods');
-Route::resource('goodType', 'admin/goodsType');
-Route::resource('attr', 'admin/attribute');
+Route::resource('menu','admin/menu')->middleware(['Auth', 'CheckRule']);
+Route::resource('position','admin/position')->middleware(['Auth', 'CheckRule']);
+Route::resource('department','admin/department')->middleware(['Auth', 'CheckRule']);
+Route::resource('user','admin/adminUser')->middleware(['Auth', 'CheckRule']);
+Route::resource('rule','admin/rule')->middleware(['Auth', 'CheckRule']);
+Route::resource('category','admin/category')->middleware(['Auth', 'CheckRule']);
+Route::resource('good', 'admin/goods')->middleware(['Auth', 'CheckRule']);
+Route::resource('goodType', 'admin/goodsType')->middleware(['Auth', 'CheckRule']);
+Route::resource('attr', 'admin/attribute')->middleware(['Auth', 'CheckRule']);
 
-Route::get('base/index', 'admin/base/index');
-Route::post('base/login', 'admin/base/login');
-Route::post('comm/logout', 'admin/comm/logout');
+//Route::get('base/index', 'admin/base/index');
+//Route::post('base/login', 'admin/base/login');
+//Route::post('comm/logout', 'admin/comm/logout');
 
-Route::post('files/index', 'admin/files/index');
+Route::post('files/index', 'admin/files/index')->middleware(['Auth', 'CheckRule']);
 
-Route::post('user/enable', 'admin/adminUser/enable');
-Route::post('user/changePass', 'admin/adminUser/changePass');
-Route::post('user/setUserInfo', 'admin/adminUser/setUserInfo');
-Route::post('rule/enable', 'admin/rule/enable');
-Route::post('position/enable', 'admin/position/enable');
-Route::post('department/enable', 'admin/department/enable');
-Route::post('menu/enable', 'admin/menu/enable');
-Route::post('category/enable', 'admin/category/enable');
-Route::post('good/enable', 'admin/goods/enable');
+Route::post('user/enable', 'admin/adminUser/enable')->middleware(['Auth', 'CheckRule']);
+Route::post('user/changePass', 'admin/adminUser/changePass')->middleware(['Auth', 'CheckRule']);
+Route::post('user/setUserInfo', 'admin/adminUser/setUserInfo')->middleware(['Auth', 'CheckRule']);
+Route::post('rule/enable', 'admin/rule/enable')->middleware(['Auth', 'CheckRule']);
+Route::post('position/enable', 'admin/position/enable')->middleware(['Auth', 'CheckRule']);
+Route::post('department/enable', 'admin/department/enable')->middleware(['Auth', 'CheckRule']);
+Route::post('menu/enable', 'admin/menu/enable')->middleware(['Auth', 'CheckRule']);
+Route::post('category/enable', 'admin/category/enable')->middleware(['Auth', 'CheckRule']);
+Route::post('good/enable', 'admin/goods/enable')->middleware(['Auth', 'CheckRule']);
 
-Route::get('goodType/list', 'admin/goodsType/goodsTypes');
-Route::get('attr/list', 'admin/attribute/attrList');
+Route::get('goodType/list', 'admin/goodsType/goodsTypes')->middleware(['Auth', 'CheckRule']);
+Route::get('attr/list', 'admin/attribute/attrList')->middleware(['Auth', 'CheckRule']);
 
-Route::miss('admin/base/index');
+//Route::miss('admin/base/index');
 
 return [
     // 定义资源路由

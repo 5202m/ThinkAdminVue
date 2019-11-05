@@ -2,11 +2,22 @@
 
 namespace app\admin\controller;
 
-class GoodsType extends Comm
+use think\Controller;
+
+class GoodsType extends Controller//Comm
 {
+    protected $model;
+
+    protected $param;
+
+    protected $middleware = [
+        'checkRule' => ['except'    => ['read', 'enable'] ]
+    ];
+
     public function initialize()
     {
-        parent::initialize();
+        //parent::initialize();
+        $this->param = $this->request->param();
         $this->model = new \app\admin\model\GoodsType();
     }
 
@@ -17,9 +28,9 @@ class GoodsType extends Comm
      */
     public function index()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $page = $this->param['currentPage'];
         $pageSize = $this->param['pageSize'];
         $ret = $this->model->getGoodsType([], $page, $pageSize);
@@ -36,9 +47,9 @@ class GoodsType extends Comm
      */
     public function goodsTypes()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $ret = $this->model->getGoodsTypeList();
         if ($ret) {
             return msg(200, $ret);
@@ -64,9 +75,9 @@ class GoodsType extends Comm
      */
     public function save()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         $ret = $this->model->saveGoodsType($this->param);
         if ($ret) {
             return msg(200, null, '添加成功');
@@ -109,9 +120,9 @@ class GoodsType extends Comm
      */
     public function update()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(102, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
             unset($this->param['id']);
@@ -133,9 +144,9 @@ class GoodsType extends Comm
      */
     public function delete()
     {
-        if (!$this->checkRule()) {
+        /*if (!$this->checkRule()) {
             return msg(401, null, '您没有权限操作');
-        }
+        }*/
         if ($this->param['id']) {
             $id = $this->param['id'];
         } else {
