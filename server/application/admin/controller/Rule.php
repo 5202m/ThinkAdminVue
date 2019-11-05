@@ -11,7 +11,7 @@ class Rule extends Controller//Comm
     protected $param;
 
     protected $middleware = [
-        'checkRule' => ['except'    => ['read', 'enable'] ]
+        'checkRule' => ['except'    => ['index', 'read', 'enable'] ]
     ];
 
     public function initialize()

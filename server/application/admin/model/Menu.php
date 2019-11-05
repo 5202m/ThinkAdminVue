@@ -28,11 +28,7 @@ class Menu extends Model
 
     public function getMenuByIds($ids = [])
     {
-        $data = [
-          'id' => array('in',$ids),
-          'status' => 1
-        ];
-        $res = $this->where($data)->order('sort', 'asc')->select();
+        $res = $this->whereIn('id', $ids)->where('status', '=',1)->order('sort', 'asc')->select();
         if ($res) {
             if ($res) {
                 $res = $res->toArray();
